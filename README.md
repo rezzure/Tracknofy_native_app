@@ -1,2 +1,2 @@
-# Tracknofy_Native_App
+# Tracknofy_native_app
 Here mobile app code will be committed 

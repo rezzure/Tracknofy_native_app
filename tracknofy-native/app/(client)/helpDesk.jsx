@@ -17,9 +17,14 @@ import { Picker } from '@react-native-picker/picker';
 // import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 import { ArrowLeftIcon, PaperAirplaneIcon, PhotoIcon } from 'react-native-heroicons/outline';
+import { useAuth } from '../contexts/AuthContext';
 
 const HelpDesk = () => {
   // const { backendURL } = useAuth();
+  // const backendURL = 'http://localhost:3000'
+  // const backendURL = 'http://192.168.31.94:3000'
+  //  const backendURL = useAuth()
+  const backendURL = 'http://192.168.31.94:3000'
   const navigation = useNavigation();
   
   // State for form data
@@ -126,99 +131,100 @@ const HelpDesk = () => {
   };
 
   // Submit the query form
-  // const handleSubmit = async () => {
-  //   if (!formData.queryType || !formData.description) {
-  //     Alert.alert('Error', 'Please fill all required fields');
-  //     return;
-  //   }
+  const handleSubmit = async () => {
+    if (!formData.queryType || !formData.description) {
+      Alert.alert('Error', 'Please fill all required fields');
+      return;
+    }
 
-  //   setIsSubmitting(true);
-  //   try {
-  //     const clientId = await AsyncStorage.getItem('_id');
-  //     const token = await AsyncStorage.getItem('token');
+    setIsSubmitting(true);
+    try {
+      // const clientId = await AsyncStorage.getItem('_id');
+      // const token = await AsyncStorage.getItem('token');
       
-  //     const formDataToSend = new FormData();
-  //     formDataToSend.append("queryType", formData.queryType);
-  //     formDataToSend.append("description", formData.description);
+      const formDataToSend = new FormData();
+      formDataToSend.append("queryType", formData.queryType);
+      formDataToSend.append("description", formData.description);
       
-  //     // Append photos
-  //     formData.photos.forEach((photo, index) => {
-  //       formDataToSend.append("photos", {
-  //         uri: photo.uri,
-  //         type: 'image/jpeg',
-  //         name: `photo_${index}.jpg`
-  //       });
-  //     });
+      // Append photos
+      formData.photos.forEach((photo, index) => {
+        formDataToSend.append("photos", {
+          uri: photo.uri,
+          type: 'image/jpeg',
+          name: `photo_${index}.jpg`
+        });
+      });
 
-  //     const response = await fetch(`${backendURL}/api/queries`, {
-  //       method: 'POST',
-  //       headers: {
-  //         'Content-Type': 'multipart/form-data',
-  //         'Authorization': `Bearer ${token}`
-  //       },
-  //       body: formDataToSend,
-  //     });
+      const response = await fetch(`${backendURL}/api/queries`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          // 'Authorization': `Bearer ${token}`
+        },
+        body: formDataToSend,
+      });
 
-  //     const result = await response.json();
+      const result = await response.json();
+      console.log(result)
 
-  //     if (result.success) {
-  //       Alert.alert('Success', 'Query submitted successfully');
-  //       resetForm();
-  //       fetchClientQueries();
-  //     } else {
-  //       throw new Error(result.message || 'Failed to submit query');
-  //     }
-  //   } catch (error) {
-  //     console.error("Failed to submit query:", error);
-  //     Alert.alert('Error', error.message || 'Failed to submit query');
-  //   } finally {
-  //     setIsSubmitting(false);
-  //   }
-  // };
+      if (result.success) {
+        Alert.alert('Success', 'Query submitted successfully');
+        resetForm();
+        // fetchClientQueries();
+      } else {
+        throw new Error(result.message || 'Failed to submit query');
+      }
+    } catch (error) {
+      console.error("Failed to submit query:", error);
+      Alert.alert('Error', error.message || 'Failed to submit query');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   // Submit client reply
-  // const handleClientReply = async (queryId) => {
-  //   if (!clientReply.trim()) {
-  //     Alert.alert('Error', 'Reply message is required');
-  //     return;
-  //   }
+  const handleClientReply = async (queryId) => {
+    if (!clientReply.trim()) {
+      Alert.alert('Error', 'Reply message is required');
+      return;
+    }
 
-  //   setIsSubmitting(true);
-  //   try {
-  //     const token = await AsyncStorage.getItem('token');
+    setIsSubmitting(true);
+    try {
+      // const token = await AsyncStorage.getItem('token');
       
-  //     const response = await fetch(
-  //       `${backendURL}/api/queries/${queryId}/reply`,
-  //       {
-  //         method: 'PATCH',
-  //         headers: {
-  //           'Content-Type': 'application/json',
-  //           'Authorization': `Bearer ${token}`
-  //         },
-  //         body: JSON.stringify({ replyMessage: clientReply }),
-  //       }
-  //     );
+      const response = await fetch(
+        `${backendURL}/api/queries/${queryId}/reply`,
+        {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+            // 'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify({ replyMessage: clientReply }),
+        }
+      );
 
-  //     const result = await response.json();
+      const result = await response.json();
 
-  //     if (result.success) {
-  //       Alert.alert('Success', 'Reply submitted successfully');
-  //       setClientReply('');
-  //       fetchClientQueries();
-  //       setSelectedQuery(prev => ({
-  //         ...prev,
-  //         communications: result.data.communications,
-  //       }));
-  //     } else {
-  //       throw new Error(result.message || 'Failed to submit reply');
-  //     }
-  //   } catch (error) {
-  //     console.error("Failed to submit reply:", error);
-  //     Alert.alert('Error', error.message || 'Failed to submit reply');
-  //   } finally {
-  //     setIsSubmitting(false);
-  //   }
-  // };
+      if (result.success) {
+        Alert.alert('Success', 'Reply submitted successfully');
+        setClientReply('');
+        // fetchClientQueries();
+        setSelectedQuery(prev => ({
+          ...prev,
+          communications: result.data.communications,
+        }));
+      } else {
+        throw new Error(result.message || 'Failed to submit reply');
+      }
+    } catch (error) {
+      console.error("Failed to submit reply:", error);
+      Alert.alert('Error', error.message || 'Failed to submit reply');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   // Reset form
   const resetForm = () => {
@@ -525,7 +531,7 @@ const HelpDesk = () => {
           {/* Submit Button */}
           {!selectedQuery && (
             <TouchableOpacity
-              // onPress={handleSubmit}
+              onPress={handleSubmit}
               disabled={isSubmitting}
               className="bg-blue-500 p-3 rounded-md items-center"
             >

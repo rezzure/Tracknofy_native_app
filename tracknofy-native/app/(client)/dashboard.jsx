@@ -1,70 +1,3 @@
-// import {Text, Image, Platform, ScrollView, ImageBackground, View } from 'react-native'
-// import React from 'react'
-// import { SafeAreaView } from 'react-native-safe-area-context'
-// import logo from '../../assets/images/tracknofy3.jpg'
-
-// import { BlurView } from 'expo-blur';
-
-
-// import { router, useRouter } from 'expo-router'
-
-// import { boolean } from 'yup'
-
-
-// export default function Dashboard() {
-
-// //   const router = useRouter()
-
-
-
-//   // const restaurants = restaurants; //bevakoofi
-
-// //   const renderItem = ({ item }) => (
-// //     <TouchableOpacity onPress={() => router.push(`/restaurant/${item.name}`)} className='bg-[#5f5f5f] max-h-64 max-w-xs flex justify-center rounded-lg p-4 mx-4 shadow-md'>
-// //       <Image resizeMode='cover' source={{ uri: item.image }} className='h-28 mt-2 mb-1 rounded-lg' />
-// //       <Text className='text-white text-lg font-bold mb-2'>{item.name}</Text>
-// //       <Text className='text-white text-base mb-2'>{item.address}</Text>
-// //       <Text className='text-white text-base mb-2'>Open: {item.opening} - Close: {item.closing}</Text>
-// //     </TouchableOpacity>
-// //   )
-
-
-
-
-//   return (
-//     // type arrays stylling
-//     <SafeAreaView style={[{ backgroundColor: "#2b2b2b" }, Platform.OS === "android" && { paddingBottom: 50 }, Platform.OS === 'ios' && { paddingBottom: 20 }]}>
-
-//       <View className='flex items-center '>
-//         <View className='bg-[#ffff] w-11/12 rounded-lg shadow-lg justify-center items-center flex flex-row p-2'>
-//           <View className='flex flex-row items-center justify-center'>
-//             <Text className={`text-base h-10 ${Platform.OS === "ios" ? "pt-[8px]" : "pt-1"} align-middle text-black`}> {" "} Welcome to {" "}</Text>
-//             <Image source={logo} resizeMethod='cover' className={"w-20 h-12"} />
-           
-//           </View>
-
-//         </View>
-//       </View>
-
-//       <ScrollView stickyHeaderIndices={[0]} >
-//         <ImageBackground source='' resizeMode='cover' className='mb
-//         -4 w-full h-52 items-center justify-center bg-[#ffff]'>
-          
-//         </ImageBackground>
-
-  
-
-//         {/* ye scollview ke bahar scrolable nhi hai */}
-
-//       </ScrollView>
-
-
-
-//     </SafeAreaView>
-//   )
-// }
-
-
 
 import React, { useState, useEffect, useRef } from 'react';
 import {
@@ -78,14 +11,22 @@ import {
 import { LineChart, PieChart } from 'react-native-chart-kit';
 import { Dimensions } from 'react-native';
 
-import AsyncStorage from '@react-native-async-storage/async-storage';
+// import AsyncStorage from '@react-native-async-storage/async-storage';
 import { PhoneIcon, GlobeIcon } from 'react-native-heroicons/outline';
 import { useNavigation } from '@react-navigation/native';
+// import { useAuth } from '../../contexts/AuthContext';
+
+
+
 
 export default function Dashboard() {
   // const { backendURL } = useAuth(); // Get backend URL from context
+  // console.log(backendURL)
 
- const backendURL = 'http://localhost:3000';
+ 
+  const backendURL = 'http://192.168.1.21:3000';
+
+  
 
 
   const [dashboardData, setDashboardData] = useState({
@@ -146,7 +87,7 @@ export default function Dashboard() {
   //   try {
   //     const email = await AsyncStorage.getItem('email');
   //     const token = await AsyncStorage.getItem('token');
-      
+
   //     const response = await fetch(
   //       `${backendURL}/api/get/LastPayment?email=${email}`,
   //       {
@@ -157,7 +98,7 @@ export default function Dashboard() {
   //         },
   //       }
   //     );
-      
+
   //     const result = await response.json();
 
   //     if (!result.success) {
@@ -168,7 +109,7 @@ export default function Dashboard() {
   //       };
   //       return setLastPayment(data);
   //     }
-      
+
   //     setLastPayment({
   //       last_payment: result.data.amount,
   //       date: result.data.transactionDate,
@@ -184,7 +125,7 @@ export default function Dashboard() {
   //   try {
   //     const email = await AsyncStorage.getItem('email');
   //     const token = await AsyncStorage.getItem('token');
-      
+
   //     const response = await fetch(
   //       `${backendURL}/api/get/supervisorDetail?email=${email}`,
   //       {
@@ -195,9 +136,9 @@ export default function Dashboard() {
   //         },
   //       }
   //     );
-      
+
   //     const result = await response.json();
-      
+
   //     if (result.success) {
   //       setSupervisorDetail({
   //         supervisor_name: result.supervisorDetails.name,
@@ -215,7 +156,7 @@ export default function Dashboard() {
   //     setLoading(true);
   //     const email = await AsyncStorage.getItem('email');
   //     const token = await AsyncStorage.getItem('token');
-      
+
   //     let response = await fetch(
   //       `${backendURL}/api/get/clientDetail?email=${email}`,
   //       {
@@ -226,9 +167,9 @@ export default function Dashboard() {
   //         },
   //       }
   //     );
-      
+
   //     let result = await response.json();
-      
+
   //     setClientData({
   //       balance_amount: result.data?.balance_amount || 0,
   //       lastPayment: result.data?.lastPayment || 0,
@@ -265,7 +206,7 @@ export default function Dashboard() {
   //         { category: 'Miscellaneous', amount: 500000, approved: false },
   //       ],
   //     };
-      
+
   //     setDashboardData(mockData);
   //     setLoading(false);
   //   } catch (err) {
@@ -295,7 +236,7 @@ export default function Dashboard() {
       <View className="flex-1 justify-center items-center bg-gray-50 px-4">
         <Text className="text-red-600 text-lg font-semibold mb-2">Error!</Text>
         <Text className="text-gray-700 text-center">{error}</Text>
-        <TouchableOpacity 
+        <TouchableOpacity
           className="mt-6 bg-blue-500 py-3 px-6 rounded-lg"
         //   onPress={fetchDashboardData}
         >
@@ -349,27 +290,24 @@ export default function Dashboard() {
 
           {/* Total Expenses */}
           <View
-            className={`p-4 rounded-lg mb-4 w-[48%] ${
-              clientData.total_expense > clientData.total_payment
+            className={`p-4 rounded-lg mb-4 w-[48%] ${clientData.total_expense > clientData.total_payment
                 ? 'bg-red-50'
                 : 'bg-green-50'
-            }`}
+              }`}
           >
             <Text
-              className={`text-sm font-medium ${
-                clientData.total_expense > clientData.total_payment
+              className={`text-sm font-medium ${clientData.total_expense > clientData.total_payment
                   ? 'text-red-800'
                   : 'text-green-800'
-              }`}
+                }`}
             >
               Total Expenses
             </Text>
             <Text
-              className={`text-xl font-bold mt-1 ${
-                clientData.total_expense > clientData.total_payment
+              className={`text-xl font-bold mt-1 ${clientData.total_expense > clientData.total_payment
                   ? 'text-red-600'
                   : 'text-green-600'
-              }`}
+                }`}
             >
               {formatINR(clientData.total_expense)}
             </Text>
@@ -377,25 +315,22 @@ export default function Dashboard() {
 
           {/* Balance Payment */}
           <View
-            className={`p-4 rounded-lg w-[48%] ${
-              clientData.balance_amount > 0 ? 'bg-green-50' : 'bg-red-50'
-            }`}
+            className={`p-4 rounded-lg w-[48%] ${clientData.balance_amount > 0 ? 'bg-green-50' : 'bg-red-50'
+              }`}
           >
             <Text
-              className={`text-sm font-medium ${
-                clientData.balance_amount > 0
+              className={`text-sm font-medium ${clientData.balance_amount > 0
                   ? 'text-green-800'
                   : 'text-red-800'
-              }`}
+                }`}
             >
               Balance Amount
             </Text>
             <Text
-              className={`text-xl font-bold mt-1 ${
-                clientData.balance_amount > 0
+              className={`text-xl font-bold mt-1 ${clientData.balance_amount > 0
                   ? 'text-green-600'
                   : 'text-red-600'
-              }`}
+                }`}
             >
               {formatINR(clientData.balance_amount)}
             </Text>
@@ -441,13 +376,12 @@ export default function Dashboard() {
                 </View>
                 <View className="w-full bg-gray-200 rounded-full h-2">
                   <View
-                    className={`h-2 rounded-full ${
-                      stage.completed < 30
+                    className={`h-2 rounded-full ${stage.completed < 30
                         ? 'bg-red-500'
                         : stage.completed < 70
-                        ? 'bg-yellow-500'
-                        : 'bg-green-500'
-                    }`}
+                          ? 'bg-yellow-500'
+                          : 'bg-green-500'
+                      }`}
                     style={{ width: `${stage.completed}%` }}
                   />
                 </View>
@@ -524,13 +458,13 @@ export default function Dashboard() {
           Quick Actions
         </Text>
         <View className="flex-row justify-between">
-          <TouchableOpacity 
+          <TouchableOpacity
             className="bg-blue-500 py-3 px-6 rounded-lg w-[48%] items-center"
             onPress={() => navigation.navigate('Payment')}
           >
             <Text className="text-white font-medium">Make Payment</Text>
           </TouchableOpacity>
-          <TouchableOpacity 
+          <TouchableOpacity
             className="bg-green-500 py-3 px-6 rounded-lg w-[48%] items-center"
             onPress={() => navigation.navigate('SiteUpdate')}
           >

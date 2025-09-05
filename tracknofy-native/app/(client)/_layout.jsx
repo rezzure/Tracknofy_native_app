@@ -84,7 +84,7 @@ import React, { useState, useEffect } from 'react';
 import { Tabs } from 'expo-router';
 import { View, Text, Animated, Easing, StyleSheet, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-// import { useAuth } from '../../contexts/AuthContext';
+import { AuthProvider } from '../../contexts/AuthContext';
 import { useRouter, useSegments, useRootNavigationState } from 'expo-router';
 
 // Tailwind-inspired color palette
@@ -221,13 +221,14 @@ export default function ClientLayout() {
   // };
 
   return (
-    <Tabs
-      // tabBar={props => <CustomTabBar {...props} />}
-      screenOptions={{
-        headerShown: false,
-        tabBarHideOnKeyboard: true,
-      }}
-    >
+    <AuthProvider>
+      <Tabs
+        // tabBar={props => <CustomTabBar {...props} />}
+        screenOptions={{
+          headerShown: false,
+          tabBarHideOnKeyboard: true,
+        }}
+      >
       {/* Dashboard Tab */}
       <Tabs.Screen
         name="dashboard"
@@ -323,6 +324,7 @@ export default function ClientLayout() {
         }}
       />
     </Tabs>
+    </AuthProvider>
   );
 }
 

@@ -24,7 +24,7 @@ export default function Dashboard() {
   // console.log(backendURL)
 
  
-  const backendURL = 'http://192.168.1.21:3000';
+  const backendURL = 'http://192.168.31.94:3000';
 
   
 

@@ -7,10 +7,12 @@ import { Formik } from 'formik';
 import validationSchema from '../../utils/authSuperAdminSchema';
 import { useRouter } from 'expo-router';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useAuth } from '../../contexts/AuthContext';
+
 
 const Login = () => {
     const router = useRouter();
-    const backendURL = 'http://192.168.1.21:3000';
+    const { backendURL } = useAuth()
     const [isLoading, setIsLoading] = useState(false);
     const [checkingAuth, setCheckingAuth] = useState(true); // For checking existing auth
 

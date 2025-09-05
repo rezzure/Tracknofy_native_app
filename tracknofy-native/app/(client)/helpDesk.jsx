@@ -25,7 +25,7 @@
 //   // const backendURL = 'http://localhost:3000'
 //   // const backendURL = 'http://192.168.31.94:3000'
 //   //  const backendURL = useAuth()
-//   const backendURL = 'http://192.168.1.21:3000'
+//   const backendURL = 'http://192.168.31.94:3000'
 //   const navigation = useNavigation();
 
   
@@ -573,7 +573,8 @@
 // export default HelpDesk;
 
 
-
+// Replaced all nested FlatList components with direct array mapping using .map()
+//Converted render functions to work with direct mapping instead of FlatList renderItem
 import React, { useState, useEffect } from 'react';
 import {
   View,
@@ -593,7 +594,7 @@ import { ArrowLeftIcon, PaperAirplaneIcon, PhotoIcon } from 'react-native-heroic
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const HelpDesk = () => {
-  const backendURL = 'http://192.168.1.21:3000';
+  const backendURL = 'http://192.168.31.94:3000';
   const navigation = useNavigation();
 
   // State for form data
@@ -821,7 +822,7 @@ const HelpDesk = () => {
     if (seconds < 60) return 'just now';
     if (seconds < 3600) return `${Math.floor(seconds / 60)}m ago`;
     if (seconds < 86400) return `${Math.floor(seconds / 3600)}h ago`;
-    return `${Mathfloor(seconds / 86400)}d ago`;
+    return `${Math.floor(seconds / 86400)}d ago`;
   };
 
   // Truncate description

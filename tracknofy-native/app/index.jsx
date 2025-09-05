@@ -1,16 +1,23 @@
-import { useRouter } from "expo-router";
+
 import { Image, ScrollView, StatusBar, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";// important'
+import { enableScreens } from 'react-native-screens';
 // const logo = require('../assets/images/dinetime.png');
 import logo from '../assets/images/tracknofy3.jpg'
+
+import { useRouter } from "expo-router";
 // import entryImg from '../assets/images/Frame.png'
 
 // import AsyncStorage from "@react-native-async-storage/async-storage";
 
+enableScreens();
+
 export default function Index() {
 
-  //import from expo-router
+  //import from expo-routerr
   const router = useRouter();
+
+
   
   return (
     <SafeAreaView className={`bg-[#ffff]`}>
@@ -31,7 +38,7 @@ export default function Index() {
                  Click here to Login to Your account
             </Text>
             <TouchableOpacity onPress={() => router.push("/login")} className="p-2 my-2 bg-[#0d2b55] rounded-lg mt-6">
-              <Text className="text-lg font-semibold text-center text-white">
+              <Text className="text-lg font-semibold text-center text-white" >
                 Login
               </Text>
             </TouchableOpacity>

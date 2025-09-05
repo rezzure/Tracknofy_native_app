@@ -15,7 +15,7 @@ export const AuthProvider = ({ children }) => {
 
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-  const backendURL = 'http://192.168.1.21:3000'
+  const backendURL = 'http://192.168.31.94:3000'
 
   useEffect(() => {
     checkAuthStatus();

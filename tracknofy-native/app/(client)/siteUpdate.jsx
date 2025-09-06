@@ -1,11 +1,11 @@
 import { View, Text } from 'react-native'
 import React from 'react'
-import CustomHeader from '../components/Common/CustomHeader'
+import CustomHeader from '../components/Common/MenuBar'
 
 const SiteUpdate = () => {
   return (
     <View>
-      <Text>Site</Text>
+      <Text>Site will be implement</Text>
     </View>
   )
 }

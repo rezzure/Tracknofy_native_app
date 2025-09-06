@@ -24,7 +24,7 @@ export default function Dashboard() {
   // console.log(backendURL)
 
  
-  const backendURL = 'http://192.168.31.94:3000';
+  // const backendURL = 'http://192.168.31.94:3000';
 
   
 
@@ -256,11 +256,11 @@ export default function Dashboard() {
   }));
 
   return (
-    <ScrollView className="flex-1 bg-gray-50">
+    <ScrollView className="flex-1 bg-gray-50 py-6">
       {/* Header */}
       <View className="bg-white shadow-sm px-6 py-4 flex-row justify-between items-center">
         <Text className="text-2xl font-bold text-gray-800">Client Dashboard</Text>
-        <View className="items-end">
+        {/* <View className="items-end">
           <Text className="text-blue-600 font-semibold text-sm">
             Your assigned supervisor:
           </Text>
@@ -271,7 +271,7 @@ export default function Dashboard() {
               +91 {supervisorDetail.supervisor_mobile}
             </Text>
           </View>
-        </View>
+        </View> */}
       </View>
 
       {/* Funds Overview */}
@@ -476,3 +476,5 @@ export default function Dashboard() {
   );
 
 }
+
+Dashboard.displayName = 'Dashboard';

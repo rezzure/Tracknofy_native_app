@@ -16,8 +16,6 @@ export default function Index() {
 
   //import from expo-routerr
   const router = useRouter();
-
-
   
   return (
     <SafeAreaView className={`bg-[#ffff]`}>
@@ -37,22 +35,20 @@ export default function Index() {
              <Text className="text-lg font-semibold text-center text-black mt-10">
                  Click here to Login to Your account
             </Text>
+            {/* onPress={()=> router.push('(client)/dashboard')} */}
+            {/* onPress={() => router.push("/login")} */}
             <TouchableOpacity onPress={() => router.push("/login")} className="p-2 my-2 bg-[#0d2b55] rounded-lg mt-6">
               <Text className="text-lg font-semibold text-center text-white" >
                 Login
               </Text>
             </TouchableOpacity>
-          </View>
-
-         
+          </View> 
         </View>
-
         
       {/* for image section */}
       <View className="flex-1">
         <Image  className="w-full h-full " resizeMode="contain"/>
       </View>
-
 
       </ScrollView>
 

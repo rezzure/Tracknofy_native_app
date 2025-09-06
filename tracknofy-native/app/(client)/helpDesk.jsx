@@ -586,6 +586,7 @@ import {
   Alert,
   ActivityIndicator,
   Modal,
+  Platform,
 } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import { Picker } from '@react-native-picker/picker';
@@ -594,7 +595,11 @@ import { ArrowLeftIcon, PaperAirplaneIcon, PhotoIcon } from 'react-native-heroic
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const HelpDesk = () => {
-  const backendURL = 'http://192.168.31.94:3000';
+  // const backendURL = 'http://192.168.31.94:3000';
+  // const backendURL = 'http://10.222.173.216:3000'
+  const backendURL = 'http://192.168.31.94:3000'
+
+
   const navigation = useNavigation();
 
   // State for form data
@@ -911,7 +916,7 @@ const HelpDesk = () => {
   }
 
   return (
-    <View className="flex-1 bg-gray-50">
+    <View className="flex-1 bg-gray-50 mt-2">
       {/* Header */}
       <View className="bg-white px-6 py-4 shadow-sm flex-row items-center">
         <TouchableOpacity onPress={() => navigation.goBack()} className="mr-4">

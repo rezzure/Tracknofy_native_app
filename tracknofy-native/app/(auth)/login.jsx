@@ -1,5 +1,5 @@
 
-import { View, Text, ScrollView, StatusBar, Image, TouchableOpacity, TextInput, Alert, ActivityIndicator } from 'react-native'
+import { View, Text, ScrollView, StatusBar, Image, TouchableOpacity, TextInput, Alert, ActivityIndicator, Platform } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import logo from '../../assets/images/tracknofy3.jpg'
@@ -7,12 +7,17 @@ import { Formik } from 'formik';
 import validationSchema from '../../utils/authSuperAdminSchema';
 import { useRouter } from 'expo-router';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useAuth } from '../../contexts/AuthContext';
+// import { useAuth } from '../../contexts/AuthContext';
 
 
 const Login = () => {
     const router = useRouter();
-    const { backendURL } = useAuth()
+    // const { backendURL } = useAuth()
+   //   const backendURL = 'http://192.168.1.21:3000'
+   const backendURL = 'http://192.168.31.94:3000'
+
+
+      
     const [isLoading, setIsLoading] = useState(false);
     const [checkingAuth, setCheckingAuth] = useState(true); // For checking existing auth
 

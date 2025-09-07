@@ -510,7 +510,7 @@ const Payments = () => {
         <TouchableOpacity
           onPress={handleSubmit}
           disabled={isLoading}
-          className={`p-3 rounded-md ${isLoading ? "bg-blue-400" : "bg-blue-600"}`}
+          className={`p-3 rounded-md ${isLoading ? "bg-[#465274]" : "bg-[#465274]"}`}
         >
           {isLoading ? (
             <View className="flex-row items-center justify-center">

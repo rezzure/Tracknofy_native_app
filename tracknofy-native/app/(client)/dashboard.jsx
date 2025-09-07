@@ -256,7 +256,7 @@ export default function Dashboard() {
   }));
 
   return (
-    <ScrollView className="flex-1 bg-gray-50 py-6">
+    <ScrollView className="flex-1 bg-gray-50 py-2">
       {/* Header */}
       <View className="bg-white shadow-sm px-6 py-4 flex-row justify-between items-center">
         <Text className="text-2xl font-bold text-gray-800">Client Dashboard</Text>

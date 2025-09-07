@@ -1126,7 +1126,7 @@ const HelpDesk = () => {
             <TouchableOpacity
               onPress={handleSubmit}
               disabled={isSubmitting}
-              className="bg-blue-500 p-3 rounded-md items-center"
+              className="bg-[#465274] p-3 rounded-md items-center"
             >
               <Text className="text-white font-medium">
                 {isSubmitting ? 'Submitting...' : 'Submit Query'}

@@ -358,7 +358,8 @@ import { View, Text, Animated, Easing, StyleSheet, TouchableOpacity } from 'reac
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter, useSegments, useRootNavigationState } from 'expo-router';
 import MenuBar from '../components/Common/MenuBar';
-import ProfileModal from '../components/Common/ProfileModal';
+import { SafeAreaView } from 'react-native-safe-area-context';
+
 
 export default function ClientLayout() {
   const router = useRouter();
@@ -375,9 +376,9 @@ export default function ClientLayout() {
 
   // Sample user data - replace with actual data from your context/auth
   const userData = {
-    name: "John Doe",
-    email: "john.doe@example.com",
-    mobile: "+1234567890"
+    name: "shiv kumar",
+    email: "shivkumar@gmail.com",
+    mobile: "+913456789052"
   };
 
   // Set active tab based on current route
@@ -420,9 +421,10 @@ export default function ClientLayout() {
   };
 
   return (
+   
     <View className="flex-1">
       {/* Menu Bar at the top */}
-      <MenuBar onProfilePress={() => setProfileModalVisible(true)} />
+      <MenuBar />
       
       {/* Tab Navigator */}
       <Tabs
@@ -518,14 +520,23 @@ export default function ClientLayout() {
             href: null, // This hides the screen from the tab bar
           }}
         />
+
+         <Tabs.Screen
+          name="notifications"
+          options={{
+            href: null, // This hides the screen from the tab bar
+          }}
+        />
       </Tabs>
+
       
       {/* Profile Modal */}
-      <ProfileModal 
+      {/* <ProfileModal 
         visible={profileModalVisible}
         onClose={() => setProfileModalVisible(false)}
         userData={userData}
-      />
+      /> */}
     </View>
+   
   );
 }

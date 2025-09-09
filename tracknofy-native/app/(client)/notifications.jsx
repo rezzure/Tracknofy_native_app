@@ -85,7 +85,7 @@ const Notifications = () => {
           keyExtractor={item => item.id}
           className="flex-1 bg-white"
           ListEmptyComponent={
-            <View className="p-5 items-center justify-center">
+            <View className="p-5 items-center justify-center mt-10">
               <Ionicons name="notifications-off-outline" size={48} color="#9ca3af" />
               <Text className="text-gray-500 text-lg mt-4">No notifications yet</Text>
             </View>

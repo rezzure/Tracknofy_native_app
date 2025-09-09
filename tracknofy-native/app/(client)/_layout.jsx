@@ -529,13 +529,7 @@ export default function ClientLayout() {
         />
       </Tabs>
 
-      
-      {/* Profile Modal */}
-      {/* <ProfileModal 
-        visible={profileModalVisible}
-        onClose={() => setProfileModalVisible(false)}
-        userData={userData}
-      /> */}
+    
     </View>
    
   );

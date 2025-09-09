@@ -915,6 +915,7 @@ const HelpDesk = () => {
   }
 
   return (
+    
     <View className="flex-1 bg-gray-50 mt-2">
       {/* Header */}
       <View className="bg-white px-6 py-4 shadow-sm flex-row items-center">

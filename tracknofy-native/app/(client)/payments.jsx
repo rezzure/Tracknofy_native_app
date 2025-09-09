@@ -17,6 +17,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 // import { useAuth } from '../../contexts/AuthContext';
 
 import { useToast } from "react-native-toast-notifications";
+import { useAuth } from "../../contexts/AuthContext";
 
 // This is a simplified implementation of file-saver for React Native
 const saveAs = async (uri, fileName) => {
@@ -37,8 +38,8 @@ const saveAs = async (uri, fileName) => {
 };
 
 const Payments = () => {
-  //  const backendURL = 'http://192.168.1.21:3000'
-  const backendURL = 'http://192.168.31.94:3000'
+    const { backendURL } = useAuth()
+       
 
   const toast = useToast();
 

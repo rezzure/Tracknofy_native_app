@@ -593,12 +593,11 @@ import { Picker } from '@react-native-picker/picker';
 import { useNavigation } from '@react-navigation/native';
 import { ArrowLeftIcon, PaperAirplaneIcon, PhotoIcon } from 'react-native-heroicons/outline';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useAuth } from '../../contexts/AuthContext';
 
 const HelpDesk = () => {
-  // const backendURL = 'http://192.168.31.94:3000';
-  // const backendURL = 'http://10.222.173.216:3000'
-  const backendURL = 'http://192.168.31.94:3000'
-
+  const { backendURL } = useAuth()
+  
 
   const navigation = useNavigation();
 

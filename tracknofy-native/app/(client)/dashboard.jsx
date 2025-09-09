@@ -14,6 +14,7 @@ import { Dimensions } from 'react-native';
 // import AsyncStorage from '@react-native-async-storage/async-storage';
 import { PhoneIcon, GlobeIcon } from 'react-native-heroicons/outline';
 import { useNavigation } from '@react-navigation/native';
+import { useAuth } from '../../contexts/AuthContext';
 // import { useAuth } from '../../contexts/AuthContext';
 
 
@@ -24,7 +25,8 @@ export default function Dashboard() {
   // console.log(backendURL)
 
  
-  // const backendURL = 'http://192.168.31.94:3000';
+  const { backendURL } = useAuth()
+  console.log(backendURL)
 
   
 

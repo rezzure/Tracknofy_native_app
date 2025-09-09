@@ -1,21 +1,24 @@
 
-// import AsyncStorage from '@react-native-async-storage/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useRouter } from 'expo-router';
 
-// import React, { createContext, useContext, useState, useEffect } from 'react';
-// import { Alert } from 'react-native';
-
-
-// // Create the Auth Context
-// const AuthContext = createContext();
-
-// // Auth Provider Component
-// export const AuthProvider = ({ children }) => {
-//     console.log("AuthProvider is being rendered"); 
+import React, { createContext, useContext, useState, useEffect } from 'react';
+import { Alert } from 'react-native';
 
 
-//   const [user, setUser] = useState(null);
-//   const [loading, setLoading] = useState(true);
-//   const backendURL = 'http://10.222.173.216:3000'
+// Create the Auth Context
+const AuthContext = createContext();
+
+// Auth Provider Component
+export const AuthProvider = ({ children }) => {
+    console.log("AuthProvider is being rendered"); 
+
+
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+ const backendURL = 'http://192.168.31.94:3000'
+
+ const router = useRouter()
 
 //   useEffect(() => {
 //     checkAuthStatus();
@@ -46,45 +49,49 @@
 
 
 
-//   const logout = async () => {
-//     try {
-//       await AsyncStorage.multiRemove([
-//         "token", "name", "email", "mobile", "role", "_id", "superAdminExist"
-//       ]);
-//       setUser(null);
-//       Alert.alert("Success", "User Logout Success")
+  const logout = async () => {
+    try {
+      await AsyncStorage.multiRemove([
+        "token", "name", "email", "mobile", "role", "_id", "superAdminExist"
+      ]);
+      setUser(null);
+      Alert.alert("Success", "User Logout Success")
+      router.push('/login')
     
-//       return true;
-//     } catch (error) {
-//       console.error('Logout error:', error.message);
-//       Alert.alert("Failed", "Failed to Logout")
-//       return false;
-//     }
-//   };
+      return true;
+    } catch (error) {
+      console.error('Logout error:', error.message);
+      Alert.alert("Failed", "Failed to Logout")
+      return false;
+    }
+  };
 
 
-//   const value = {
-//     user,
-//     loading,
-//     backendURL,
-//     logout,
-//     checkAuthStatus,
-//   };
+  const value = {
+    user,
+    loading,
+    backendURL,
+    logout,
+  };
 
-//   return (
-//     <AuthContext.Provider value={value}>
-//       {children}
-//     </AuthContext.Provider>
-//   );
-// };
+  return (
+    <AuthContext.Provider value={value}>
+      {children}
+    </AuthContext.Provider>
+  );
+};
 
-// // Custom hook to use the auth context
-// export const useAuth = () => {
-//   const context = useContext(AuthContext);
-//   if (!context) {
-//     throw new Error('useAuth must be used within an AuthProvider');
-//   }
-//   return context;
-// };
+// Custom hook to use the auth context
+export const useAuth = () => {
+  const context = useContext(AuthContext);
+  if (!context) {
+    throw new Error('useAuth must be used within an AuthProvider');
+  }
+  return context;
+};
 
-// export default AuthContext;
+export default AuthContext;
+
+
+
+

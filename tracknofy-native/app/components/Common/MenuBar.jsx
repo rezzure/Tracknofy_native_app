@@ -307,13 +307,15 @@ import {
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
+import { useAuth } from '../../../contexts/AuthContext';
 
 const MenuBar = ({ userData = { name: 'shiv kumar', email: 'shivkumar@gmail.com' } }) => {
   const [isMenuVisible, setIsMenuVisible] = useState(false);
   const slideAnim = useRef(new Animated.Value(-300)).current; // Start off-screen to the left
   const overlayAnim = useRef(new Animated.Value(0)).current; // For overlay opacity
   const router = useRouter();
-
+ 
+  const { logout } = useAuth()
   // Toggle menu visibility with smooth animation
 
   const toggleMenu = () => {
@@ -479,7 +481,7 @@ const MenuBar = ({ userData = { name: 'shiv kumar', email: 'shivkumar@gmail.com'
 
             {/* Footer with logout button */}
             <View className="p-2 border-t border-b border-gray-200 m-5">
-              <TouchableOpacity className="flex-row items-center py-3">
+              <TouchableOpacity className="flex-row items-center py-3" onPress={()=> logout()}>
                 <Ionicons name="log-out-outline" size={22} className="text-red-500 mr-4" />
                 <Text className="text-lg text-red-500">Logout</Text>
               </TouchableOpacity>

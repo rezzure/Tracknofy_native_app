@@ -1,12 +1,12 @@
 import { View, Text } from 'react-native'
 import React from 'react'
 
-const dashboard = () => {
+const siteProgressUpdate = () => {
   return (
     <View>
-      <Text>Supervisor Dashboard</Text>
+      <Text>siteProgressUpdate</Text>
     </View>
   )
 }
 
-export default dashboard
+export default siteProgressUpdate

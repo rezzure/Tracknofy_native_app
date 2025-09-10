@@ -36,7 +36,7 @@ const Login = () => {
                     } else if (role === "client") {
                         router.replace("(client)/dashboard");
                     } else if (role === "supervisor") {
-                        router.replace("(supervisor)/dashboard");
+                        router.replace("(supervisor)/supervisorDashboard");
                     }
                 }
             } catch (error) {
@@ -139,7 +139,7 @@ const Login = () => {
                 } else if (data.data.role === "client") {
                     router.replace("(client)/dashboard");
                 } else if(data.data.role === "supervisor"){
-                    router.replace("(supervisor)/dashboard");
+                    router.replace("(supervisor)/supervisorDashboard");
                 } else {
                     Alert.alert("Error", "Unknown user role");
                 }

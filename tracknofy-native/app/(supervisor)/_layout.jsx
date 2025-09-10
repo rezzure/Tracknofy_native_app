@@ -435,7 +435,7 @@ export default function ClientLayout() {
       >
         {/* Dashboard Tab */}
         <Tabs.Screen
-          name="dashboard"
+          name="supervisorDashboard"
           options={{
             title: 'Home',
             tabBarIcon: ({ color, size, focused }) => (
@@ -453,9 +453,9 @@ export default function ClientLayout() {
 
         {/* Payments Tab */}
         <Tabs.Screen
-          name="payment"
+          name="expenseEntry"
           options={{
-            title: 'Payment',
+            title: 'Expense Entry',
             tabBarIcon: ({ color, size, focused }) => (
               <Ionicons 
                 name={focused ? 'card' : 'card-outline'} 
@@ -474,9 +474,9 @@ export default function ClientLayout() {
 
         {/* Site Update Tab */}
         <Tabs.Screen
-          name="site-update"
+          name="siteProgressUpdate"
           options={{
-            title: 'Progress',
+            title: 'Site Progress',
             tabBarIcon: ({ color, size, focused }) => (
               <Ionicons 
                 name={focused ? 'document-text' : 'document-text-outline'} 
@@ -495,9 +495,9 @@ export default function ClientLayout() {
 
         {/* HelpDesk Tab */}
         <Tabs.Screen
-          name="help-desk-client"
+          name="materialManagementSupervisor"
           options={{
-            title: 'Message',
+            title: 'Material',
             tabBarIcon: ({ color, size, focused }) => (
               <Ionicons 
                 name={focused ? 'chatbubble-ellipses' : 'chatbubble-ellipses-outline'} 
@@ -515,14 +515,14 @@ export default function ClientLayout() {
         />
 
         <Tabs.Screen
-          name="profile"
+          name="vendorManagementSupervisor"
           options={{
             href: null, // This hides the screen from the tab bar
           }}
         />
 
          <Tabs.Screen
-          name="notifications"
+          name="partnerManagementSupervisor"
           options={{
             href: null, // This hides the screen from the tab bar
           }}

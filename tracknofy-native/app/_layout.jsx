@@ -12,7 +12,7 @@ export default function RootLayout() {
         <Stack screenOptions={{ headerShown: false }}>
           {/* making screen */}
           <Stack.Screen name="index" />
-          {/* <Stack.Screen name="(client)" /> */}
+          {/* <Stack.Screen name="(supervisor)" /> */}
            {/* <Stack.Screen name="dashboard" />
            <Stack.Screen name="payments" />
            <Stack.Screen name="siteUpdate" />

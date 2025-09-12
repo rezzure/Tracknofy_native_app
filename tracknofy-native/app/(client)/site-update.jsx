@@ -173,6 +173,7 @@ const SiteUpdates = () => {
   }, []);
 
   // Handle comment submission
+  
   // const handleCommentSubmit = async () => {
   //   if (!newComment.trim()) return;
 

@@ -352,34 +352,193 @@
 // }
 
 
+// import React, { useState, useEffect } from 'react';
+// import { Tabs } from 'expo-router';
+// import { View, Text, Animated, Easing, StyleSheet, TouchableOpacity } from 'react-native';
+// import { Ionicons } from '@expo/vector-icons';
+// import { useRouter, useSegments, useRootNavigationState } from 'expo-router';
+// import MenuBar from '../components/Common/MenuBar';
+// import { SafeAreaView } from 'react-native-safe-area-context';
+
+
+// export default function ClientLayout() {
+//   const router = useRouter();
+//   const segments = useSegments();
+//   const rootNavigationState = useRootNavigationState();
+//   const [activeTab, setActiveTab] = useState('dashboard');
+//   const [scaleAnims] = useState({
+//     dashboard: new Animated.Value(1),
+//     payments: new Animated.Value(1),
+//     siteUpdate: new Animated.Value(1),
+//     helpdeskclient: new Animated.Value(1),
+//   });
+//   const [profileModalVisible, setProfileModalVisible] = useState(false);
+
+//   // Sample user data - replace with actual data from your context/auth
+//   const userData = {
+//     name: "shiv kumar",
+//     email: "shivkumar@gmail.com",
+//     mobile: "+913456789052"
+//   };
+
+//   // Set active tab based on current route
+//   useEffect(() => {
+//     if (rootNavigationState?.key) {
+//       const currentSegment = segments[segments.length - 1];
+//       if (currentSegment && scaleAnims[currentSegment]) {
+//         setActiveTab(currentSegment);
+//       }
+//     }
+//   }, [segments, rootNavigationState]);
+
+//   // Smooth press animation for tabs
+//   const animateTabPress = (tabName) => {
+//     // Reset all animations first
+//     Object.keys(scaleAnims).forEach(key => {
+//       Animated.timing(scaleAnims[key], {
+//         toValue: 1,
+//         duration: 150,
+//         easing: Easing.ease,
+//         useNativeDriver: true,
+//       }).start();
+//     });
+
+//     // Animate the pressed tab
+//     Animated.sequence([
+//       Animated.timing(scaleAnims[tabName], {
+//         toValue: 0.85,
+//         duration: 100,
+//         easing: Easing.ease,
+//         useNativeDriver: true,
+//       }),
+//       Animated.timing(scaleAnims[tabName], {
+//         toValue: 1,
+//         duration: 100,
+//         easing: Easing.ease,
+//         useNativeDriver: true,
+//       }),
+//     ]).start();
+//   };
+
+//   return (
+   
+//     <View className="flex-1">
+//       {/* Menu Bar at the top */}
+//       <MenuBar />
+      
+//       {/* Tab Navigator */}
+//       <Tabs
+//         screenOptions={{
+//           headerShown: false,
+//           tabBarHideOnKeyboard: true,
+//         }}
+//       >
+//         {/* Dashboard Tab */}
+//         <Tabs.Screen
+//           name="dashboard"
+//           options={{
+//             title: 'Home',
+//             tabBarIcon: ({ color, size, focused }) => (
+//               <Ionicons 
+//                 name={focused ? 'home' : 'home-outline'} 
+//                 size={size} 
+//                 color={color} 
+//               />
+//             ),
+//           }}
+//           listeners={{
+//             tabPress: () => animateTabPress('dashboard'),
+//           }}
+//         />
+
+//         {/* Payments Tab */}
+//         <Tabs.Screen
+//           name="payment"
+//           options={{
+//             title: 'Payment',
+//             tabBarIcon: ({ color, size, focused }) => (
+//               <Ionicons 
+//                 name={focused ? 'card' : 'card-outline'} 
+//                 size={size} 
+//                 color={color} 
+//               />
+//             ),
+//           }}
+//           listeners={{
+//             tabPress: () => animateTabPress('payments'),
+//             focus: () => {
+//               console.log('Fetching payments data...');
+//             },
+//           }}
+//         />
+
+//         {/* Site Update Tab */}
+//         <Tabs.Screen
+//           name="site-update"
+//           options={{
+//             title: 'Progress',
+//             tabBarIcon: ({ color, size, focused }) => (
+//               <Ionicons 
+//                 name={focused ? 'document-text' : 'document-text-outline'} 
+//                 size={size} 
+//                 color={color} 
+//               />
+//             ),
+//           }}
+//           listeners={{
+//             tabPress: () => animateTabPress('siteUpdate'),
+//             focus: () => {
+//               console.log('Fetching site updates...');
+//             },
+//           }}
+//         />
+
+//         {/* HelpDesk Tab */}
+      
+//         <Tabs.Screen
+//           name="profile"
+//           options={{
+//             href: null, // This hides the screen from the tab bar
+//           }}
+//         />
+
+//          <Tabs.Screen
+//           name="notifications"
+//           options={{
+//             href: null, // This hides the screen from the tab bar
+//           }}
+//         />
+//       </Tabs>
+
+    
+//     </View>
+   
+//   );
+// }
+
+
+
+
 import React, { useState, useEffect } from 'react';
 import { Tabs } from 'expo-router';
-import { View, Text, Animated, Easing, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Animated, Easing, TouchableOpacity, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter, useSegments, useRootNavigationState } from 'expo-router';
 import MenuBar from '../components/Common/MenuBar';
-import { SafeAreaView } from 'react-native-safe-area-context';
 
-
-export default function ClientLayout() {
+export default function _Layout() {
   const router = useRouter();
   const segments = useSegments();
   const rootNavigationState = useRootNavigationState();
   const [activeTab, setActiveTab] = useState('dashboard');
+  
+  // Create animation values for each actual screen name
   const [scaleAnims] = useState({
     dashboard: new Animated.Value(1),
-    payments: new Animated.Value(1),
-    siteUpdate: new Animated.Value(1),
-    helpdesk: new Animated.Value(1),
+    payment: new Animated.Value(1),
+    'site-update': new Animated.Value(1),
+    'help-desk-client': new Animated.Value(1),
   });
-  const [profileModalVisible, setProfileModalVisible] = useState(false);
-
-  // Sample user data - replace with actual data from your context/auth
-  const userData = {
-    name: "shiv kumar",
-    email: "shivkumar@gmail.com",
-    mobile: "+913456789052"
-  };
 
   // Set active tab based on current route
   useEffect(() => {
@@ -395,12 +554,9 @@ export default function ClientLayout() {
   const animateTabPress = (tabName) => {
     // Reset all animations first
     Object.keys(scaleAnims).forEach(key => {
-      Animated.timing(scaleAnims[key], {
-        toValue: 1,
-        duration: 150,
-        easing: Easing.ease,
-        useNativeDriver: true,
-      }).start();
+      if (key !== tabName && scaleAnims[key]) {
+        scaleAnims[key].setValue(1); // Reset immediately
+      }
     });
 
     // Animate the pressed tab
@@ -420,9 +576,25 @@ export default function ClientLayout() {
     ]).start();
   };
 
+  // Custom tab button component with animation
+  const CustomTabButton = ({ tabName, children, onPress }) => {
+    return (
+      <Animated.View style={{ transform: [{ scale: scaleAnims[tabName] || 1 }] }}>
+        <TouchableOpacity
+          onPress={() => {
+            animateTabPress(tabName);
+            onPress();
+          }}
+          style={styles.tabButton}
+        >
+          {children}
+        </TouchableOpacity>
+      </Animated.View>
+    );
+  };
+
   return (
-   
-    <View className="flex-1">
+    <View style={{ flex: 1 }}>
       {/* Menu Bar at the top */}
       <MenuBar />
       
@@ -431,6 +603,29 @@ export default function ClientLayout() {
         screenOptions={{
           headerShown: false,
           tabBarHideOnKeyboard: true,
+          tabBarButton: (props) => {
+            // Extract tab name from the href safely
+            const tabName = props.to?.split('/').pop() || '';
+            
+            // Only apply animation to actual tab screens, not hidden ones
+            if (scaleAnims[tabName]) {
+              return (
+                <CustomTabButton 
+                  tabName={tabName} 
+                  onPress={props.onPress}
+                >
+                  {props.children}
+                </CustomTabButton>
+              );
+            }
+            
+            // For hidden screens or invalid tabs, use default behavior
+            return (
+              <TouchableOpacity onPress={props.onPress} style={styles.tabButton}>
+                {props.children}
+              </TouchableOpacity>
+            );
+          },
         }}
       >
         {/* Dashboard Tab */}
@@ -446,12 +641,9 @@ export default function ClientLayout() {
               />
             ),
           }}
-          listeners={{
-            tabPress: () => animateTabPress('dashboard'),
-          }}
         />
 
-        {/* Payments Tab */}
+        {/* Expense Entry Tab */}
         <Tabs.Screen
           name="payment"
           options={{
@@ -464,16 +656,9 @@ export default function ClientLayout() {
               />
             ),
           }}
-          listeners={{
-            tabPress: () => animateTabPress('payments'),
-            focus: () => {
-              console.log('Fetching payments data...');
-            },
-          }}
         />
 
-        {/* Site Update Tab */}
-        <Tabs.Screen
+          <Tabs.Screen
           name="site-update"
           options={{
             title: 'Progress',
@@ -485,15 +670,9 @@ export default function ClientLayout() {
               />
             ),
           }}
-          listeners={{
-            tabPress: () => animateTabPress('siteUpdate'),
-            focus: () => {
-              console.log('Fetching site updates...');
-            },
-          }}
         />
 
-        {/* HelpDesk Tab */}
+        {/* Site Progress Tab */}
         <Tabs.Screen
           name="help-desk-client"
           options={{
@@ -506,31 +685,31 @@ export default function ClientLayout() {
               />
             ),
           }}
-          listeners={{
-            tabPress: () => animateTabPress('helpdesk'),
-            focus: () => {
-              console.log('Fetching help desk messages...');
-            },
+        />
+
+        {/* Hidden screens */}
+        <Tabs.Screen
+          name="profile"
+          options={{
+            href: null,
           }}
         />
 
         <Tabs.Screen
-          name="profile"
-          options={{
-            href: null, // This hides the screen from the tab bar
-          }}
-        />
-
-         <Tabs.Screen
           name="notifications"
           options={{
-            href: null, // This hides the screen from the tab bar
+            href: null,
           }}
         />
       </Tabs>
-
-    
     </View>
-   
   );
 }
+
+const styles = StyleSheet.create({
+  tabButton: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+});

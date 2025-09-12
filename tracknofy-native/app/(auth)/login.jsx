@@ -13,10 +13,11 @@ import { useAuth } from '../../contexts/AuthContext';
 
 const Login = () => {
     const router = useRouter();
+    const [isLoading, setIsLoading] = useState(false);
     
     const { backendURL } = useAuth()
       
-    const [isLoading, setIsLoading] = useState(false);
+   
     const [checkingAuth, setCheckingAuth] = useState(true); // For checking existing auth
 
     // Check if user is already logged in
@@ -36,7 +37,7 @@ const Login = () => {
                     } else if (role === "client") {
                         router.replace("(client)/dashboard");
                     } else if (role === "supervisor") {
-                        router.replace("(supervisor)/supervisorDashboard");
+                        router.replace("(supervisor)/dashboard");
                     }
                 }
             } catch (error) {
@@ -77,7 +78,7 @@ const Login = () => {
         }
     };
 
-    // Call this function when you need to see user details
+    // // Call this function when you need to see user details
     useEffect(() => {
         const getUserDetails = async () => {
             const userDetails = await fetchUserDetails();
@@ -139,7 +140,7 @@ const Login = () => {
                 } else if (data.data.role === "client") {
                     router.replace("(client)/dashboard");
                 } else if(data.data.role === "supervisor"){
-                    router.replace("(supervisor)/supervisorDashboard");
+                    router.replace("(supervisor)/dashboard");
                 } else {
                     Alert.alert("Error", "Unknown user role");
                 }

@@ -517,7 +517,7 @@ const MenuBar = ({ userData = { name: 'User', email: 'user@example.com' } }) => 
     <>
       {/* Main Menu Bar */}
       <SafeAreaView className="bg-[#1d3557]">
-        <View className="flex-row justify-between items-center px-4 py-3">
+        <View className="flex-row justify-between items-center mt-6 px-4 py-3">
           {/* Left Side - Menu Icon */}
           <TouchableOpacity onPress={toggleMenu} className="p-2">
             <Ionicons name="menu" size={28} color="white" />
@@ -562,9 +562,9 @@ const MenuBar = ({ userData = { name: 'User', email: 'user@example.com' } }) => 
           ]}
           className="z-20"
         >
-          <SafeAreaView className="flex-1 bg-white">
+          <SafeAreaView className="flex-1">
             {/* User Profile Section */}
-            <View className="p-5 bg-[#1d3557]">
+            <View className="p-5 bg-[#1d3557] pt-10">
               <View className="flex-row items-center">
                 <View className="w-16 h-16 rounded-full bg-blue-300 items-center justify-center mr-4">
                   <Ionicons name="person" size={32} color="white" />

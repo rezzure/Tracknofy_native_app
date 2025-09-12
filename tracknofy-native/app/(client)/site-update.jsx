@@ -32,7 +32,7 @@ const SiteUpdates = () => {
   const [showLightbox, setShowLightbox] = useState(false);
   
   // // State for comments and new comment input
-  // const [comments, setComments] = useState([]);
+  const [comments, setComments] = useState([]);
   // const [newComment, setNewComment] = useState('');
 
   // Format date in Indian format

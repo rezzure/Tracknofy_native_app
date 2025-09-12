@@ -1,5 +1,4 @@
-
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -7,29 +6,22 @@ import {
   ActivityIndicator,
   Alert,
   TouchableOpacity,
-} from 'react-native';
-import { LineChart, PieChart } from 'react-native-chart-kit';
-import { Dimensions } from 'react-native';
+} from "react-native";
+import { PieChart } from "react-native-chart-kit";
+import { Dimensions } from "react-native";
 
 // import AsyncStorage from '@react-native-async-storage/async-storage';
-import { PhoneIcon, GlobeIcon } from 'react-native-heroicons/outline';
-import { useNavigation } from '@react-navigation/native';
-import { useAuth } from '../../contexts/AuthContext';
+import { PhoneIcon, GlobeIcon } from "react-native-heroicons/outline";
+import { useNavigation } from "@react-navigation/native";
+import { useAuth } from "../../contexts/AuthContext";
 // import { useAuth } from '../../contexts/AuthContext';
-
-
-
 
 export default function Dashboard() {
   // const { backendURL } = useAuth(); // Get backend URL from context
   // console.log(backendURL)
 
- 
-  const { backendURL } = useAuth()
-  console.log(backendURL)
-
-  
-
+  const { backendURL } = useAuth();
+  console.log(backendURL);
 
   const [dashboardData, setDashboardData] = useState({
     funds: {
@@ -38,13 +30,18 @@ export default function Dashboard() {
       lastPayment: null,
     },
     projectStages: [],
-    expenses: [],
+    expenses: [
+      { category: "Food", amount: 3500, approved: true, color: "#FF6B6B"},
+      { category: "Transport", amount: 2500, approved: true, color: "#4ECDC4"},
+      { category: "Entertainment", amount: 2000, approved: false, color: "#FFE66D"},
+      { category: "Materials", amount: 4500, approved: true, color: "#9CECFB"},
+    ],
   });
   const [clientData, setClientData] = useState({
+    total_payment: 0,
+    total_expense: 0,
     balance_amount: 0,
     lastPayment: 0,
-    total_expense: 0,
-    total_payment: 0,
   });
   // i make it false for testing purpose its was true
   const [loading, setLoading] = useState(false);
@@ -54,32 +51,32 @@ export default function Dashboard() {
     date: Date.now(),
   });
   const [supervisorDetail, setSupervisorDetail] = useState({
-    supervisor_name: '',
+    supervisor_name: "",
     supervisor_mobile: 0,
   });
 
   const navigation = useNavigation();
-  const screenWidth = Dimensions.get('window').width;
+  const screenWidth = Dimensions.get("window").width;
 
   // Format currency in Indian style
   const formatINR = (amount) => {
-    return new Intl.NumberFormat('en-IN', {
-      style: 'currency',
-      currency: 'INR',
+    return new Intl.NumberFormat("en-IN", {
+      style: "currency",
+      currency: "INR",
       maximumFractionDigits: 0,
     }).format(amount);
   };
 
   // Format date in Indian format
   const formatDate = (dateString) => {
-    if (!dateString) return 'N/A';
+    if (!dateString) return "N/A";
     const date = new Date(dateString);
-    return date.toLocaleDateString('en-IN', {
-      day: '2-digit',
-      month: 'short',
-      year: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit',
+    return date.toLocaleDateString("en-IN", {
+      day: "2-digit",
+      month: "short",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
       hour12: true,
     });
   };
@@ -240,7 +237,7 @@ export default function Dashboard() {
         <Text className="text-gray-700 text-center">{error}</Text>
         <TouchableOpacity
           className="mt-6 bg-blue-500 py-3 px-6 rounded-lg"
-        //   onPress={fetchDashboardData}
+          //   onPress={fetchDashboardData}
         >
           <Text className="text-white font-medium">Try Again</Text>
         </TouchableOpacity>
@@ -252,8 +249,8 @@ export default function Dashboard() {
   const chartData = approvedExpenses.map((exp, index) => ({
     name: exp.category,
     amount: exp.amount,
-    color: `rgba(${index * 60}, ${index * 40 + 100}, ${index * 20 + 200}, 1)`,
-    legendFontColor: '#7F7F7F',
+    color: exp.color,
+    legendFontColor: "#7F7F7F",
     legendFontSize: 12,
   }));
 
@@ -261,7 +258,9 @@ export default function Dashboard() {
     <ScrollView className="flex-1 bg-gray-50 py-2">
       {/* Header */}
       <View className="bg-white shadow-sm px-6 py-4 flex-row justify-between items-center">
-        <Text className="text-2xl font-bold text-gray-800">Client Dashboard</Text>
+        <Text className="text-2xl font-bold text-gray-800">
+          Client Dashboard
+        </Text>
         {/* <View className="items-end">
           <Text className="text-blue-600 font-semibold text-sm">
             Your assigned supervisor:
@@ -284,7 +283,9 @@ export default function Dashboard() {
         <View className="flex-row flex-wrap justify-between">
           {/* Total Paid */}
           <View className="bg-blue-50 p-4 rounded-lg mb-4 w-[48%]">
-            <Text className="text-sm font-medium text-blue-800">Total Paid</Text>
+            <Text className="text-sm font-medium text-blue-800">
+              Total Paid
+            </Text>
             <Text className="text-xl font-bold text-blue-600 mt-1">
               {formatINR(clientData.total_payment)}
             </Text>
@@ -292,24 +293,27 @@ export default function Dashboard() {
 
           {/* Total Expenses */}
           <View
-            className={`p-4 rounded-lg mb-4 w-[48%] ${clientData.total_expense > clientData.total_payment
-                ? 'bg-red-50'
-                : 'bg-green-50'
-              }`}
+            className={`p-4 rounded-lg mb-4 w-[48%] ${
+              clientData.total_expense > clientData.total_payment
+                ? "bg-red-50"
+                : "bg-green-50"
+            }`}
           >
             <Text
-              className={`text-sm font-medium ${clientData.total_expense > clientData.total_payment
-                  ? 'text-red-800'
-                  : 'text-green-800'
-                }`}
+              className={`text-sm font-medium ${
+                clientData.total_expense > clientData.total_payment
+                  ? "text-red-800"
+                  : "text-green-800"
+              }`}
             >
               Total Expenses
             </Text>
             <Text
-              className={`text-xl font-bold mt-1 ${clientData.total_expense > clientData.total_payment
-                  ? 'text-red-600'
-                  : 'text-green-600'
-                }`}
+              className={`text-xl font-bold mt-1 ${
+                clientData.total_expense > clientData.total_payment
+                  ? "text-red-600"
+                  : "text-green-600"
+              }`}
             >
               {formatINR(clientData.total_expense)}
             </Text>
@@ -317,22 +321,25 @@ export default function Dashboard() {
 
           {/* Balance Payment */}
           <View
-            className={`p-4 rounded-lg w-[48%] ${clientData.balance_amount > 0 ? 'bg-green-50' : 'bg-red-50'
-              }`}
+            className={`p-4 rounded-lg w-[48%] ${
+              clientData.balance_amount > 0 ? "bg-green-50" : "bg-red-50"
+            }`}
           >
             <Text
-              className={`text-sm font-medium ${clientData.balance_amount > 0
-                  ? 'text-green-800'
-                  : 'text-red-800'
-                }`}
+              className={`text-sm font-medium ${
+                clientData.balance_amount > 0
+                  ? "text-green-800"
+                  : "text-red-800"
+              }`}
             >
               Balance Amount
             </Text>
             <Text
-              className={`text-xl font-bold mt-1 ${clientData.balance_amount > 0
-                  ? 'text-green-600'
-                  : 'text-red-600'
-                }`}
+              className={`text-xl font-bold mt-1 ${
+                clientData.balance_amount > 0
+                  ? "text-green-600"
+                  : "text-red-600"
+              }`}
             >
               {formatINR(clientData.balance_amount)}
             </Text>
@@ -378,12 +385,13 @@ export default function Dashboard() {
                 </View>
                 <View className="w-full bg-gray-200 rounded-full h-2">
                   <View
-                    className={`h-2 rounded-full ${stage.completed < 30
-                        ? 'bg-red-500'
+                    className={`h-2 rounded-full ${
+                      stage.completed < 30
+                        ? "bg-red-500"
                         : stage.completed < 70
-                          ? 'bg-yellow-500'
-                          : 'bg-green-500'
-                      }`}
+                          ? "bg-yellow-500"
+                          : "bg-green-500"
+                    }`}
                     style={{ width: `${stage.completed}%` }}
                   />
                 </View>
@@ -422,8 +430,7 @@ export default function Dashboard() {
                 }}
                 accessor="amount"
                 backgroundColor="transparent"
-                paddingLeft="0"
-                absolute
+                paddingLeft="10"
               />
               <View className="mt-4">
                 <Text className="text-sm font-medium text-gray-700 mb-2">
@@ -448,7 +455,9 @@ export default function Dashboard() {
             </>
           ) : (
             <View className="h-40 justify-center items-center">
-              <Text className="text-gray-500">No approved expenses to display</Text>
+              <Text className="text-gray-500">
+                No approved expenses to display
+              </Text>
             </View>
           )}
         </View>
@@ -459,16 +468,16 @@ export default function Dashboard() {
         <Text className="text-xl font-semibold text-gray-700 mb-4">
           Quick Actions
         </Text>
-        <View className="flex-row justify-between">
+        <View className="flex-row justify-between ">
           <TouchableOpacity
-            className="bg-blue-500 py-3 px-6 rounded-lg w-[48%] items-center"
-            onPress={() => navigation.navigate('Payment')}
+            className="bg-blue-500 h-12 flex justify-center items-center rounded-lg w-[48%]"
+            onPress={() => navigation.navigate("payment")}
           >
             <Text className="text-white font-medium">Make Payment</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            className="bg-green-500 py-3 px-6 rounded-lg w-[48%] items-center"
-            onPress={() => navigation.navigate('SiteUpdate')}
+            className="bg-green-500 h-12 flex justify-center items-center rounded-lg w-[48%]"
+            onPress={() => navigation.navigate("site-update")}
           >
             <Text className="text-white font-medium">View Site Updates</Text>
           </TouchableOpacity>
@@ -476,7 +485,6 @@ export default function Dashboard() {
       </View>
     </ScrollView>
   );
-
 }
 
-Dashboard.displayName = 'Dashboard';
+Dashboard.displayName = "Dashboard";

@@ -19,13 +19,10 @@
     "@react-navigation/elements": "^2.3.8",
     "@react-navigation/native": "^7.1.6",
     "axios": "^1.11.0",
-<<<<<<< Updated upstream
-    "expo": "~54.0.0",
-=======
-    "expo": "^54.0.0",
->>>>>>> Stashed changes
+    "expo": "^54.0.6",
     "expo-blur": "~15.0.7",
     "expo-constants": "~18.0.8",
+    "expo-document-picker": "~14.0.7",
     "expo-file-system": "~19.0.12",
     "expo-font": "~14.0.8",
     "expo-haptics": "~15.0.7",
@@ -56,14 +53,13 @@
     "react-native-webview": "13.15.0",
     "tailwindcss": "^3.4.17",
     "yup": "^1.7.0"
-    
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
-    "@types/react": "~19.0.10",
+    "@types/react": "^19.1.13",
     "eslint": "^9.25.0",
-    "eslint-config-expo": "~9.2.0",
-    "typescript": "~5.8.3"
+    "eslint-config-expo": "~10.0.0",
+    "typescript": "~5.9.2"
   },
   "private": true
 }

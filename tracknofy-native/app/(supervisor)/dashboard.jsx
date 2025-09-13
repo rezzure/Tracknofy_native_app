@@ -45,22 +45,14 @@ const dashboard = () => {
       const data = await response.json();
       if(!data.success){
         console.log(data.message);
-        toast.show({
-          type: 'info',
-          text1: 'Info',
-          text2: data.message
-        });
+        toast.show(data.message, { type: 'info' });
         return;
       }
       setUserDetail(data.data);
       
     } catch (err) {
       setError(err.message);
-      toast.show({
-        type: 'error',
-        text1: 'Error',
-        text2: 'Failed to load dashboard data'
-      });
+      toast.show('Failed to load dashboard data', { type: 'error' });
     } finally {
       setLoading(false);
       setRefreshing(false);

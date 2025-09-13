@@ -1,150 +1,666 @@
-// // import React, { useState } from 'react';
-// // import { View, TouchableOpacity, Animated, StyleSheet } from 'react-native';
-// // import { Ionicons } from '@expo/vector-icons';
-// // import { useRouter } from 'expo-router';
 
-// // const MenuBar = ({setProfileModalVisible}) => {
-// //   const [isMenuVisible, setIsMenuVisible] = useState(false);
-// //   const [slideAnim] = useState(new Animated.Value(-300)); // Start off-screen to the left
-// //   const [overlayOpacity] = useState(new Animated.Value(0)); // For overlay opacity
-// //   const router = useRouter();
+// import React, { useState, useRef, useEffect } from "react";
+// import {
+//   View,
+//   Text,
+//   TouchableOpacity,
+//   Animated,
+//   StyleSheet,
+//   SafeAreaView,
+//   ActivityIndicator,
+// } from "react-native";
+// import { Ionicons } from "@expo/vector-icons";
+// import { useRouter } from "expo-router";
+// import { useAuth } from "../../../contexts/AuthContext";
+// import AsyncStorage from "@react-native-async-storage/async-storage";
 
-// //   // Toggle menu visibility with smooth animation
-// //   const toggleMenu = () => {
-// //     if (isMenuVisible) {
-// //       // Hide menu with animation
-// //       Animated.parallel([
-// //         Animated.timing(slideAnim, {
-// //           toValue: -300,
-// //           duration: 300,
-// //           useNativeDriver: true,
-// //         }),
-// //         Animated.timing(overlayOpacity, {
-// //           toValue: 0,
-// //           duration: 300,
-// //           useNativeDriver: true,
-// //         }),
-// //       ]).start(() => setIsMenuVisible(false));
-// //     } else {
-// //       // Show menu with animation
-// //       setIsMenuVisible(true);
-// //       Animated.parallel([
-// //         Animated.timing(slideAnim, {
-// //           toValue: 0,
-// //           duration: 300,
-// //           useNativeDriver: true,
-// //         }),
-// //         Animated.timing(overlayOpacity, {
-// //           toValue: 0.5,
-// //           duration: 300,
-// //           useNativeDriver: true,
-// //         }),
-// //       ]).start();
-// //     }
-// //   };
+// // Icon mapping for menu items
+// const iconMap = {
+//   FiHome: "home-outline",
+//   FiDollarSign: "card-outline",
+//   FiClipboard: "document-text-outline",
+//   FiClock: "time-outline",
+//   FiBox: "cube-outline",
+//   FiBriefcase: "briefcase-outline",
+//   FiUserPlus: "person-add-outline",
+//   FiUser: "person-outline",
+//   FiTool: "construct-outline",
+//   MdHelp: "help-circle-outline",
+// };
 
-// //   // Navigate to a screen and close the menu
-// //   const navigateTo = (screen) => {
-// //     router.push(`/client/${screen}`);
-// //     toggleMenu(); // Close menu after navigation
-// //   };
+// const MenuBar = () => {
+//   const [isMenuVisible, setIsMenuVisible] = useState(false);
+//   const [menuItems, setMenuItems] = useState([]);
+//   const [loading, setLoading] = useState(true);
+//   const [userData, setUserData] = useState({});
 
-// //   return (
-// //     <View className="flex-row justify-between items-center px-4 py-3 bg-blue-600">
-// //       {/* Left side - Menu Icon */}
-// //       <TouchableOpacity onPress={toggleMenu} className="p-2">
-// //         <Ionicons name="menu" size={28} color="white" />
-// //       </TouchableOpacity>
+//   const slideAnim = useRef(new Animated.Value(-300)).current;
+//   const overlayAnim = useRef(new Animated.Value(0)).current;
+//   const router = useRouter();
+//   const { logout, backendURL } = useAuth();
 
-// //       {/* Right side - Profile Icon */}
-// //       {/* onPress={() => setProfileModalVisible(true)} */}
-// //       {/*  onPress={() => router.push('/client/profile')} */}
+//   //getting userDetails for showing name and email
 
-// //       <TouchableOpacity
-// //         onPress={() => setProfileModalVisible(true)}
-// //         className="p-2"
-// //       >
-// //         <Ionicons name="person-circle" size={28} color="white" />
-// //       </TouchableOpacity>
+//   useEffect(() => {
+//     const getUserDetails = async () => {
+//       try {
+//         const token = await AsyncStorage.getItem("token");
+//         const name = await AsyncStorage.getItem("name");
+//         const email = await AsyncStorage.getItem("email");
+//         const mobile = await AsyncStorage.getItem("mobile");
+//         const role = await AsyncStorage.getItem("role");
+//         const _id = await AsyncStorage.getItem("_id");
+//         const superAdminExist = await AsyncStorage.getItem("superAdminExist");
 
-// //       {/* Side Menu Overlay */}
-// //       {isMenuVisible && (
-// //         <Animated.View
-// //           style={[StyleSheet.absoluteFill, {
-// //             backgroundColor: 'rgba(0,0,0,0.5)',
-// //             opacity: overlayOpacity,
-// //             zIndex: 10,
-// //           }]}
-// //           onTouchEnd={toggleMenu} // Close menu when tapping outside
-// //         />
-// //       )}
+//         const userDetails = {
+//           token,
+//           name,
+//           email,
+//           mobile,
+//           role,
+//           _id,
+//           superAdminExist,
+//         };
+//         setUserData(userDetails);
+//       } catch (error) {
+//         console.error("Error getting user details:", error);
+//         return null;
+//       }
+//     };
 
-// //       {/* Side Menu */}
-// //       {isMenuVisible && (
-// //         <Animated.View
-// //           style={[
-// //             styles.menuContainer,
-// //             {
-// //               transform: [{ translateX: slideAnim }],
-// //             },
-// //           ]}
-// //           className="bg-white"
-// //         >
-// //           {/* Menu Header */}
-// //           <View className="p-4 border-b border-gray-200">
-// //             <Text className="text-lg font-bold text-blue-800">Menu</Text>
-// //           </View>
+//     getUserDetails();
+//   }, []);
 
-// //           {/* Menu Items */}
-// //           <TouchableOpacity
-// //             onPress={() => navigateTo('dashboard')}
-// //             className="flex-row items-center p-4 border-b border-gray-100"
-// //           >
-// //             <Ionicons name="home" size={22} className="text-blue-600 mr-3" />
-// //             <Text className="text-gray-800">Home</Text>
-// //           </TouchableOpacity>
+//   // Fetch menu items based on user role
+//   const fetchMenuItems = async () => {
+//     try {
+//       setLoading(true);
+//       const token = await AsyncStorage.getItem("token");
+//       const role = await AsyncStorage.getItem("role");
 
-// //           <TouchableOpacity
-// //             onPress={() => navigateTo('payments')}
-// //             className="flex-row items-center p-4 border-b border-gray-100"
-// //           >
-// //             <Ionicons name="card" size={22} className="text-blue-600 mr-3" />
-// //             <Text className="text-gray-800">Payment</Text>
-// //           </TouchableOpacity>
+//       if (!token || !role) {
+//         console.error("No token or role found");
+//         return;
+//       }
 
-// //           <TouchableOpacity
-// //             onPress={() => navigateTo('siteUpdate')}
-// //             className="flex-row items-center p-4 border-b border-gray-100"
-// //           >
-// //             <Ionicons name="document-text" size={22} className="text-blue-600 mr-3" />
-// //             <Text className="text-gray-800">Progress</Text>
-// //           </TouchableOpacity>
+//       const response = await fetch(`${backendURL}/api/get/role`, {
+//         method: "GET",
+//         headers: {
+//           "Content-type": "application/json",
+//           token: token,
+//         },
+//       });
 
-// //           <TouchableOpacity
-// //             onPress={() => navigateTo('helpDesk')}
-// //             className="flex-row items-center p-4 border-b border-gray-100"
-// //           >
-// //             <Ionicons name="chatbubble-ellipses" size={22} className="text-blue-600 mr-3" />
-// //             <Text className="text-gray-800">Message</Text>
-// //           </TouchableOpacity>
-// //         </Animated.View>
-// //       )}
-// //     </View>
-// //   );
-// // };
+//       const data = await response.json();
 
-// // const styles = StyleSheet.create({
-// //   menuContainer: {
-// //     position: 'absolute',
-// //     top: 0,
-// //     left: 0,
-// //     bottom: 0,
-// //     width: 300, // Adjust width as needed
-// //     zIndex: 20, // Higher than overlay
-// //   },
-// // });
+//       if (!data.success) {
+//         console.error("Failed to fetch roles:", data.message);
+//         return;
+//       }
 
-// // export default MenuBar;
+//       // Find the user's role in the response
+//       const userRole = data.data.find((item) => item.roleName === role);
+//       console.log(userRole);
+//       if (userRole && userRole.features) {
+//         setMenuItems(userRole.features);
+//       }
+//     } catch (error) {
+//       console.error("Error fetching menu items:", error);
+//     } finally {
+//       setLoading(false);
+//     }
+//   };
+
+//   useEffect(() => {
+//     if (isMenuVisible) {
+//       fetchMenuItems();
+//     }
+//   }, [isMenuVisible]);
+
+//   // Toggle menu visibility with smooth animation
+//   const toggleMenu = () => {
+//     console.log("Menu toggle pressed, current state:", isMenuVisible);
+//     try {
+//       if (isMenuVisible) {
+//         // Close menu
+//         Animated.parallel([
+//           Animated.timing(slideAnim, {
+//             toValue: -300,
+//             duration: 300,
+//             useNativeDriver: true,
+//           }),
+//           Animated.timing(overlayAnim, {
+//             toValue: 0,
+//             duration: 300,
+//             useNativeDriver: true,
+//           }),
+//         ]).start(() => {
+//           console.log("Menu closed");
+//           setIsMenuVisible(false);
+//         });
+//       } else {
+//         // Open menu
+//         console.log("Opening menu");
+//         setIsMenuVisible(true);
+//         Animated.parallel([
+//           Animated.timing(slideAnim, {
+//             toValue: 0,
+//             duration: 300,
+//             useNativeDriver: true,
+//           }),
+//           Animated.timing(overlayAnim, {
+//             toValue: 0.5,
+//             duration: 300,
+//             useNativeDriver: true,
+//           }),
+//         ]).start(() => console.log("Menu opened"));
+//       }
+//     } catch (error) {
+//       console.error("Error in toggleMenu:", error);
+//     }
+//   };
+
+//   // Navigate to a screen and close menu
+//   const navigateTo = (path) => {
+//     toggleMenu();
+//     router.push(`/${path}`);
+//   };
+
+//   // Navigate to notification screen
+//   const navigateToNotifications = (e) => {
+//     if (e && e.stopPropagation) e.stopPropagation();
+
+//     if (isMenuVisible) {
+//       toggleMenu();
+//     }
+
+//     setTimeout(() => {
+//       router.push("notifications");
+//     }, 100);
+//   };
+
+//   // Navigate to profile editing screen
+//   const navigateToProfileEdit = () => {
+//     toggleMenu();
+//     router.replace("/profile");
+//   };
+
+//   return (
+//     <>
+//       {/* Main Menu Bar */}
+//       <SafeAreaView className="bg-[#1d3557]">
+//         <View className="flex-row justify-between items-center mt-6 px-4 py-3">
+//           {/* Left Side - Menu Icon */}
+//           <TouchableOpacity onPress={toggleMenu} className="p-2">
+//             <Ionicons name="menu" size={28} color="white" />
+//           </TouchableOpacity>
+
+//           {/* Center - App Title */}
+//           <Text className="text-white text-xl font-bold">Tracknofy</Text>
+
+//           {/* Right Side - Notification Icon */}
+//           <TouchableOpacity
+//             onPress={navigateToNotifications}
+//             onPressIn={(e) => e.stopPropagation()}
+//             className="p-2"
+//           >
+//             <Ionicons name="notifications" size={24} color="white" />
+//           </TouchableOpacity>
+//         </View>
+//       </SafeAreaView>
+
+//       {/* Overlay when menu is open */}
+//       {isMenuVisible && (
+//         <Animated.View
+//           style={[
+//             StyleSheet.absoluteFill,
+//             { backgroundColor: "black", opacity: overlayAnim },
+//           ]}
+//           className="z-10"
+//         >
+//           <TouchableOpacity
+//             style={StyleSheet.absoluteFill}
+//             onPress={toggleMenu}
+//             activeOpacity={1}
+//           />
+//         </Animated.View>
+//       )}
+
+//       {/* Side Menu */}
+//       {isMenuVisible && (
+//         <Animated.View
+//           style={[
+//             styles.menuContainer,
+//             {
+//               transform: [{ translateX: slideAnim }],
+//             },
+//           ]}
+//           className="z-20"
+//         >
+//           <SafeAreaView className="flex-1">
+//             {/* User Profile Section */}
+//             <View className="p-5 bg-[#1d3557] pt-10">
+//               <View className="flex-row items-center">
+//                 <View className="w-16 h-16 rounded-full bg-white items-center justify-center mr-4">
+//                   <Ionicons name="person" size={32} color="#1d3557" />
+//                 </View>
+//                 <View className="flex-1">
+//                   <Text className="text-white text-lg font-bold">
+//                     {userData?.name}
+//                   </Text>
+//                   <Text className="text-blue-100">{userData?.email}</Text>
+//                 </View>
+//                 <TouchableOpacity
+//                   onPress={navigateToProfileEdit}
+//                   className="p-2"
+//                 >
+//                   <Ionicons name="create-outline" size={22} color="white" />
+//                 </TouchableOpacity>
+//               </View>
+//             </View>
+
+//             {/* Menu Items */}
+//             <View className="flex-1 p-4">
+//               {loading ? (
+//                 <ActivityIndicator
+//                   size="large"
+//                   color="#1d3557"
+//                   className="py-8"
+//                 />
+//               ) : menuItems.length > 0 ? (
+//                 menuItems.map((item) => (
+//                   <TouchableOpacity
+//                     key={item._id}
+//                     onPress={() => navigateTo(item.path)}
+//                     className="flex-row items-center py-4 border-b border-gray-200"
+//                   >
+//                     <Ionicons
+//                       name={iconMap[item.icon] || "help-outline"}
+//                       size={22}
+//                       className="text-blue-600 mr-4"
+//                     />
+//                     <Text className="text-lg text-gray-800">
+//                       {item.featureName}
+//                     </Text>
+//                   </TouchableOpacity>
+//                 ))
+//               ) : (
+//                 <Text className="text-gray-500 text-center py-8">
+//                   No menu items available
+//                 </Text>
+//               )}
+//             </View>
+
+//             {/* Footer with logout button */}
+//             <View className="p-2 border-t border-b border-gray-200 m-5">
+//               <TouchableOpacity
+//                 className="flex-row items-center py-3"
+//                 onPress={() => logout()}
+//               >
+//                 <Ionicons
+//                   name="log-out-outline"
+//                   size={22}
+//                   className="text-red-500 mr-4"
+//                 />
+//                 <Text className="text-lg text-red-500">Logout</Text>
+//               </TouchableOpacity>
+//             </View>
+//           </SafeAreaView>
+//         </Animated.View>
+//       )}
+//     </>
+//   );
+// };
+
+// const styles = StyleSheet.create({
+//   menuContainer: {
+//     position: "absolute",
+//     top: 0,
+//     left: 0,
+//     bottom: 0,
+//     width: 300,
+//     backgroundColor: "white",
+//     shadowColor: "#000",
+//     shadowOffset: {
+//       width: 2,
+//       height: 0,
+//     },
+//     shadowOpacity: 0.25,
+//     shadowRadius: 3.84,
+//     elevation: 5,
+//     zIndex: 20,
+//   },
+// });
+
+// export default MenuBar;
+
+// import React, { useState, useRef, useEffect } from "react";
+// import {
+//   View,
+//   Text,
+//   TouchableOpacity,
+//   Animated,
+//   StyleSheet,
+//   ActivityIndicator,
+// } from "react-native";
+// import { Ionicons } from "@expo/vector-icons";
+// import { useRouter } from "expo-router";
+// import { useAuth } from "../../../contexts/AuthContext";
+// import AsyncStorage from "@react-native-async-storage/async-storage";
+// import { useSafeAreaInsets } from "react-native-safe-area-context";
+
+// // Icon mapping for menu items
+// const iconMap = {
+//   FiHome: "home-outline",
+//   FiDollarSign: "card-outline",
+//   FiClipboard: "document-text-outline",
+//   FiClock: "time-outline",
+//   FiBox: "cube-outline",
+//   FiBriefcase: "briefcase-outline",
+//   FiUserPlus: "person-add-outline",
+//   FiUser: "person-outline",
+//   FiTool: "construct-outline",
+//   MdHelp: "help-circle-outline",
+// };
+
+// const MenuBar = () => {
+//   const [isMenuVisible, setIsMenuVisible] = useState(false);
+//   const [menuItems, setMenuItems] = useState([]);
+//   const [loading, setLoading] = useState(true);
+//   const [userData, setUserData] = useState({});
+
+//   const slideAnim = useRef(new Animated.Value(-300)).current;
+//   const overlayAnim = useRef(new Animated.Value(0)).current;
+//   const router = useRouter();
+//   const { logout, backendURL } = useAuth();
+//   const insets = useSafeAreaInsets();
+
+//   //getting userDetails for showing name and email
+//   const getUserDetails = async () => {
+//     try {
+//       const token = await AsyncStorage.getItem("token");
+//       const name = await AsyncStorage.getItem("name");
+//       const email = await AsyncStorage.getItem("email");
+//       const mobile = await AsyncStorage.getItem("mobile");
+//       const role = await AsyncStorage.getItem("role");
+//       const _id = await AsyncStorage.getItem("_id");
+//       const superAdminExist = await AsyncStorage.getItem("superAdminExist");
+
+//       const userDetails = {
+//         token,
+//         name,
+//         email,
+//         mobile,
+//         role,
+//         _id,
+//         superAdminExist,
+//       };
+//       setUserData(userDetails);
+//     } catch (error) {
+//       console.error("Error getting user details:", error);
+//       return null;
+//     }
+//   };
+
+//   // Fetch menu items based on user role
+//   const fetchMenuItems = async () => {
+//     try {
+//       setLoading(true);
+//       const token = await AsyncStorage.getItem("token");
+//       const role = await AsyncStorage.getItem("role");
+
+//       if (!token || !role) {
+//         console.error("No token or role found");
+//         return;
+//       }
+
+//       const response = await fetch(`${backendURL}/api/get/role`, {
+//         method: "GET",
+//         headers: {
+//           "Content-type": "application/json",
+//           token: token,
+//         },
+//       });
+
+//       const data = await response.json();
+
+//       if (!data.success) {
+//         console.error("Failed to fetch roles:", data.message);
+//         return;
+//       }
+
+//       // Find the user's role in the response
+//       const userRole = data.data.find((item) => item.roleName === role);
+//       console.log(userRole);
+//       if (userRole && userRole.features) {
+//         setMenuItems(userRole.features);
+//       }
+//     } catch (error) {
+//       console.error("Error fetching menu items:", error);
+//     } finally {
+//       setLoading(false);
+//     }
+//   };
+
+//   useEffect(() => {
+//     if (isMenuVisible) {
+//       fetchMenuItems();
+     
+//     }
+//   }, [isMenuVisible]);
+
+//   // Toggle menu visibility with smooth animation
+//   const toggleMenu = () => {
+//     console.log("Menu toggle pressed, current state:", isMenuVisible);
+//     try {
+//       if (isMenuVisible) {
+//         // Close menu
+//         Animated.parallel([
+//           Animated.timing(slideAnim, {
+//             toValue: -300,
+//             duration: 300,
+//             useNativeDriver: true,
+//           }),
+//           Animated.timing(overlayAnim, {
+//             toValue: 0,
+//             duration: 300,
+//             useNativeDriver: true,
+//           }),
+//         ]).start(() => {
+//           console.log("Menu closed");
+//           setIsMenuVisible(false);
+//         });
+//       } else {
+//         // Open menu - First make the menu visible, then animate
+//         setIsMenuVisible(true);
+
+//         // Use a slight delay to ensure the component is rendered before animation
+//         setTimeout(() => {
+//           Animated.parallel([
+//             Animated.timing(slideAnim, {
+//               toValue: 0,
+//               duration: 300,
+//               useNativeDriver: true,
+//             }),
+//             Animated.timing(overlayAnim, {
+//               toValue: 0.5,
+//               duration: 300,
+//               useNativeDriver: true,
+//             }),
+//           ]).start(() => console.log("Menu opened"));
+//         }, 100);
+//       }
+//     } catch (error) {
+//       console.error("Error in toggleMenu:", error);
+//     }
+//   };
+
+
+//   // Navigate to a screen and close menu
+//   const navigateTo = (path) => {
+//     toggleMenu();
+//     router.push(`/${path}`);
+//   };
+
+//   // Navigate to notification screen
+//   const navigateToNotifications = (e) => {
+//     if (e && e.stopPropagation) e.stopPropagation();
+
+//     if (isMenuVisible) {
+//       toggleMenu();
+//     }
+
+//     setTimeout(() => {
+//       router.push("notifications");
+//     }, 100);
+//   };
+
+//   // Navigate to profile editing screen
+//   const navigateToProfileEdit = () => {
+//     toggleMenu();
+//     router.replace("/profile");
+//   };
+
+//   return (
+//     <>
+//       {/* Main Menu Bar */}
+//       <View className="bg-[#1d3557]" style={{ paddingTop: insets.top }}>
+//         <View className="flex-row justify-between items-center px-4 py-3">
+//           {/* Left Side - Menu Icon */}
+//           <TouchableOpacity onPress={toggleMenu} className="p-2">
+//             <Ionicons name="menu" size={28} color="white" />
+//           </TouchableOpacity>
+
+//           {/* Center - App Title */}
+//           <Text className="text-white text-xl font-bold">Tracknofy</Text>
+
+//           {/* Right Side - Notification Icon */}
+//           <TouchableOpacity
+//             onPress={navigateToNotifications}
+//             onPressIn={(e) => e.stopPropagation()}
+//             className="p-2"
+//           >
+//             <Ionicons name="notifications" size={24} color="white" />
+//           </TouchableOpacity>
+//         </View>
+//       </View>
+
+//       {/* Overlay when menu is open */}
+//       {isMenuVisible && (
+//         <Animated.View
+//           style={[
+//             StyleSheet.absoluteFill,
+//             { backgroundColor: "black", opacity: overlayAnim, zIndex: 10 },
+//           ]}
+//         >
+//           <TouchableOpacity
+//             style={StyleSheet.absoluteFill}
+//             onPress={toggleMenu}
+//             activeOpacity={1}
+//           />
+//         </Animated.View>
+//       )}
+
+//       {/* Side Menu */}
+//       <Animated.View
+//         style={[
+//           styles.menuContainer,
+//           {
+//             transform: [{ translateX: slideAnim }],
+//             paddingTop: insets.top,
+//             pointerEvents: isMenuVisible ? "auto" : "none",
+//           },
+//         ]}
+//       >
+//         {/* User Profile Section */}
+//         <View className="p-5 bg-[#1d3557] pt-10">
+//           <View className="flex-row items-center">
+//             <View className="w-16 h-16 rounded-full bg-white items-center justify-center mr-4">
+//               <Ionicons name="person" size={32} color="#1d3557" />
+//             </View>
+//             <View className="flex-1">
+//               <Text className="text-white text-lg font-bold">
+//                 {userData?.name || "user"}
+//               </Text>
+//               <Text className="text-blue-100">
+//                 {userData?.email || "user@gmail.com"}
+//               </Text>
+//             </View>
+//             <TouchableOpacity onPress={navigateToProfileEdit} className="p-2">
+//               <Ionicons name="create-outline" size={22} color="white" />
+//             </TouchableOpacity>
+//           </View>
+//         </View>
+
+//         {/* Menu Items */}
+//         <View className="flex-1 p-4">
+//           {loading ? (
+//             <ActivityIndicator size="large" color="#1d3557" className="py-8" />
+//           ) : menuItems.length > 0 ? (
+//             menuItems.map((item) => (
+//               <TouchableOpacity
+//                 key={item._id}
+//                 onPress={() => navigateTo(item.path)}
+//                 className="flex-row items-center py-4 border-b border-gray-200"
+//               >
+//                 <Ionicons
+//                   name={iconMap[item.icon] || "help-outline"}
+//                   size={22}
+//                   className="text-blue-600 mr-4"
+//                 />
+//                 <Text className="text-lg text-gray-800">
+//                   {item.featureName}
+//                 </Text>
+//               </TouchableOpacity>
+//             ))
+//           ) : (
+//             <Text className="text-gray-500 text-center py-8">
+//               No menu items available
+//             </Text>
+//           )}
+//         </View>
+
+//         {/* Footer with logout button */}
+//         <View className="p-2 border-t border-b border-gray-200 m-5">
+//           <TouchableOpacity
+//             className="flex-row items-center py-3"
+//             onPress={() => logout()}
+//           >
+//             <Ionicons
+//               name="log-out-outline"
+//               size={22}
+//               className="text-red-500 mr-4"
+//             />
+//             <Text className="text-lg text-red-500">Logout</Text>
+//           </TouchableOpacity>
+//         </View>
+//       </Animated.View>
+//     </>
+//   );
+// };
+
+// const styles = StyleSheet.create({
+//   menuContainer: {
+//     position: "absolute",
+//     top: 0,
+//     left: 0,
+//     bottom: 0,
+//     width: 300,
+//     backgroundColor: "white",
+//     shadowColor: "#000",
+//     shadowOffset: {
+//       width: 2,
+//       height: 0,
+//     },
+//     shadowOpacity: 0.25,
+//     shadowRadius: 3.84,
+//     elevation: 5,
+//     zIndex: 20,
+//   },
+// });
+
+// export default MenuBar;
+
 
 import React, { useState, useRef, useEffect } from "react";
 import {
@@ -153,13 +669,14 @@ import {
   TouchableOpacity,
   Animated,
   StyleSheet,
-  SafeAreaView,
   ActivityIndicator,
+  Easing,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import { useAuth } from "../../../contexts/AuthContext";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 // Icon mapping for menu items
 const iconMap = {
@@ -180,43 +697,40 @@ const MenuBar = () => {
   const [menuItems, setMenuItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [userData, setUserData] = useState({});
+  const [isAnimating, setIsAnimating] = useState(false);
 
   const slideAnim = useRef(new Animated.Value(-300)).current;
   const overlayAnim = useRef(new Animated.Value(0)).current;
   const router = useRouter();
   const { logout, backendURL } = useAuth();
+  const insets = useSafeAreaInsets();
 
   //getting userDetails for showing name and email
+  const getUserDetails = async () => {
+    try {
+      const token = await AsyncStorage.getItem("token");
+      const name = await AsyncStorage.getItem("name");
+      const email = await AsyncStorage.getItem("email");
+      const mobile = await AsyncStorage.getItem("mobile");
+      const role = await AsyncStorage.getItem("role");
+      const _id = await AsyncStorage.getItem("_id");
+      const superAdminExist = await AsyncStorage.getItem("superAdminExist");
 
-  useEffect(() => {
-    const getUserDetails = async () => {
-      try {
-        const token = await AsyncStorage.getItem("token");
-        const name = await AsyncStorage.getItem("name");
-        const email = await AsyncStorage.getItem("email");
-        const mobile = await AsyncStorage.getItem("mobile");
-        const role = await AsyncStorage.getItem("role");
-        const _id = await AsyncStorage.getItem("_id");
-        const superAdminExist = await AsyncStorage.getItem("superAdminExist");
-
-        const userDetails = {
-          token,
-          name,
-          email,
-          mobile,
-          role,
-          _id,
-          superAdminExist,
-        };
-        setUserData(userDetails);
-      } catch (error) {
-        console.error("Error getting user details:", error);
-        return null;
-      }
-    };
-
-    getUserDetails();
-  }, []);
+      const userDetails = {
+        token,
+        name,
+        email,
+        mobile,
+        role,
+        _id,
+        superAdminExist,
+      };
+      setUserData(userDetails);
+    } catch (error) {
+      console.error("Error getting user details:", error);
+      return null;
+    }
+  };
 
   // Fetch menu items based on user role
   const fetchMenuItems = async () => {
@@ -260,48 +774,83 @@ const MenuBar = () => {
 
   useEffect(() => {
     if (isMenuVisible) {
+      getUserDetails();
       fetchMenuItems();
     }
   }, [isMenuVisible]);
 
   // Toggle menu visibility with smooth animation
   const toggleMenu = () => {
-    if (isMenuVisible) {
-      // Close menu
-      Animated.parallel([
-        Animated.timing(slideAnim, {
-          toValue: -300,
-          duration: 300,
-          useNativeDriver: true,
-        }),
-        Animated.timing(overlayAnim, {
-          toValue: 0,
-          duration: 300,
-          useNativeDriver: true,
-        }),
-      ]).start(() => setIsMenuVisible(false));
-    } else {
-      // Open menu
-      setIsMenuVisible(true);
-      Animated.parallel([
-        Animated.timing(slideAnim, {
-          toValue: 0,
-          duration: 300,
-          useNativeDriver: true,
-        }),
-        Animated.timing(overlayAnim, {
-          toValue: 0.5,
-          duration: 300,
-          useNativeDriver: true,
-        }),
-      ]).start();
+    if (isAnimating) return; // Prevent multiple clicks during animation
+    
+    console.log("Menu toggle pressed, current state:", isMenuVisible);
+    
+    try {
+      setIsAnimating(true);
+      
+      if (isMenuVisible) {
+        // Close menu
+        Animated.parallel([
+          Animated.timing(slideAnim, {
+            toValue: -300,
+            duration: 300,
+            easing: Easing.out(Easing.ease),
+            useNativeDriver: true,
+          }),
+          Animated.timing(overlayAnim, {
+            toValue: 0,
+            duration: 300,
+            easing: Easing.out(Easing.ease),
+            useNativeDriver: true,
+          }),
+        ]).start(({ finished }) => {
+          if (finished) {
+            console.log("Menu closed");
+            setIsMenuVisible(false);
+            setIsAnimating(false);
+          }
+        });
+      } else {
+        // Open menu - First make the menu visible, then animate
+        setIsMenuVisible(true);
+        
+        // Start animation after a tiny delay to ensure the component is rendered
+        requestAnimationFrame(() => {
+          Animated.parallel([
+            Animated.timing(slideAnim, {
+              toValue: 0,
+              duration: 200,
+              easing: Easing.out(Easing.ease),
+              useNativeDriver: true,
+            }),
+            Animated.timing(overlayAnim, {
+              toValue: 0.5,
+              duration: 200,
+              easing: Easing.out(Easing.ease),
+              useNativeDriver: true,
+            }),
+          ]).start(({ finished }) => {
+            if (finished) {
+              console.log("Menu opened");
+              setIsAnimating(false);
+            }
+          });
+        });
+      }
+    } catch (error) {
+      console.error("Error in toggleMenu:", error);
+      setIsAnimating(false);
     }
   };
 
   // Navigate to a screen and close menu
   const navigateTo = (path) => {
-    toggleMenu();
-    router.push(`/${path}`);
+    if (isMenuVisible) {
+      toggleMenu();
+    }
+    setTimeout(() => {
+      router.push(`/${path}`);
+    }, 300); // Wait for menu to close
   };
 
   // Navigate to notification screen
@@ -314,22 +863,26 @@ const MenuBar = () => {
 
     setTimeout(() => {
       router.push("notifications");
-    }, 100);
+    }, 300); // Wait for menu to close
   };
 
   // Navigate to profile editing screen
   const navigateToProfileEdit = () => {
-    toggleMenu();
-    router.replace("/profile");
+    if (isMenuVisible) {
+      toggleMenu();
+    }
+    setTimeout(() => {
+      router.replace("/profile");
+    }, 300); // Wait for menu to close
   };
 
   return (
     <>
       {/* Main Menu Bar */}
-      <SafeAreaView className="bg-[#1d3557]">
-        <View className="flex-row justify-between items-center mt-6 px-4 py-3">
+      <View className="bg-[#1d3557]" style={{ paddingTop: insets.top }}>
+        <View className="flex-row justify-between items-center px-4 py-3">
           {/* Left Side - Menu Icon */}
-          <TouchableOpacity onPress={toggleMenu} className="p-2">
+          <TouchableOpacity onPress={toggleMenu} className="p-2" disabled={isAnimating}>
             <Ionicons name="menu" size={28} color="white" />
           </TouchableOpacity>
 
@@ -339,113 +892,109 @@ const MenuBar = () => {
           {/* Right Side - Notification Icon */}
           <TouchableOpacity
             onPress={navigateToNotifications}
-            onPressIn={(e) => e.stopPropagation()}
             className="p-2"
+            disabled={isAnimating}
           >
             <Ionicons name="notifications" size={24} color="white" />
           </TouchableOpacity>
         </View>
-      </SafeAreaView>
+      </View>
 
-      {/* Overlay when menu is open */}
-      {isMenuVisible && (
-        <Animated.View
-          style={[
-            StyleSheet.absoluteFill,
-            { backgroundColor: "black", opacity: overlayAnim },
-          ]}
-          className="z-10"
-        >
-          <TouchableOpacity
-            style={StyleSheet.absoluteFill}
-            onPress={toggleMenu}
-            activeOpacity={1}
-          />
-        </Animated.View>
-      )}
+      {/* Overlay - Always rendered but hidden when not needed */}
+      <Animated.View
+        style={[
+          StyleSheet.absoluteFill,
+          { 
+            backgroundColor: "black", 
+            opacity: overlayAnim, 
+            zIndex: 10,
+            display: isMenuVisible || isAnimating ? 'flex' : 'none',
+          },
+        ]}
+      >
+        <TouchableOpacity
+          style={StyleSheet.absoluteFill}
+          onPress={toggleMenu}
+          activeOpacity={1}
+          disabled={isAnimating}
+        />
+      </Animated.View>
 
       {/* Side Menu */}
-      {isMenuVisible && (
-        <Animated.View
-          style={[
-            styles.menuContainer,
-            {
-              transform: [{ translateX: slideAnim }],
-            },
-          ]}
-          className="z-20"
-        >
-          <SafeAreaView className="flex-1">
-            {/* User Profile Section */}
-            <View className="p-5 bg-[#1d3557] pt-10">
-              <View className="flex-row items-center">
-                <View className="w-16 h-16 rounded-full bg-white items-center justify-center mr-4">
-                  <Ionicons name="person" size={32} color="#1d3557" />
-                </View>
-                <View className="flex-1">
-                  <Text className="text-white text-lg font-bold">
-                    {userData?.name}
-                  </Text>
-                  <Text className="text-blue-100">{userData?.email}</Text>
-                </View>
-                <TouchableOpacity
-                  onPress={navigateToProfileEdit}
-                  className="p-2"
-                >
-                  <Ionicons name="create-outline" size={22} color="white" />
-                </TouchableOpacity>
-              </View>
+      <Animated.View
+        style={[
+          styles.menuContainer,
+          {
+            transform: [{ translateX: slideAnim }],
+            paddingTop: insets.top,
+          },
+        ]}
+      >
+        {/* User Profile Section */}
+        <View className="p-5 bg-[#1d3557] pt-10">
+          <View className="flex-row items-center">
+            <View className="w-16 h-16 rounded-full bg-white items-center justify-center mr-4">
+              <Ionicons name="person" size={32} color="#1d3557" />
             </View>
-
-            {/* Menu Items */}
-            <View className="flex-1 p-4">
-              {loading ? (
-                <ActivityIndicator
-                  size="large"
-                  color="#1d3557"
-                  className="py-8"
-                />
-              ) : menuItems.length > 0 ? (
-                menuItems.map((item) => (
-                  <TouchableOpacity
-                    key={item._id}
-                    onPress={() => navigateTo(item.path)}
-                    className="flex-row items-center py-4 border-b border-gray-200"
-                  >
-                    <Ionicons
-                      name={iconMap[item.icon] || "help-outline"}
-                      size={22}
-                      className="text-blue-600 mr-4"
-                    />
-                    <Text className="text-lg text-gray-800">
-                      {item.featureName}
-                    </Text>
-                  </TouchableOpacity>
-                ))
-              ) : (
-                <Text className="text-gray-500 text-center py-8">
-                  No menu items available
-                </Text>
-              )}
+            <View className="flex-1">
+              <Text className="text-white text-lg font-bold">
+                {userData?.name || "user"}
+              </Text>
+              <Text className="text-blue-100">
+                {userData?.email || "user@gmail.com"}
+              </Text>
             </View>
+            <TouchableOpacity onPress={navigateToProfileEdit} className="p-2" disabled={isAnimating}>
+              <Ionicons name="create-outline" size={22} color="white" />
+            </TouchableOpacity>
+          </View>
+        </View>
 
-            {/* Footer with logout button */}
-            <View className="p-2 border-t border-b border-gray-200 m-5">
+        {/* Menu Items */}
+        <View className="flex-1 p-4">
+          {loading ? (
+            <ActivityIndicator size="large" color="#1d3557" className="py-8" />
+          ) : menuItems.length > 0 ? (
+            menuItems.map((item) => (
               <TouchableOpacity
-                className="flex-row items-center py-3"
-                onPress={() => logout()}
+                key={item._id}
+                onPress={() => navigateTo(item.path)}
+                className="flex-row items-center py-4 border-b border-gray-200"
+                disabled={isAnimating}
               >
                 <Ionicons
-                  name="log-out-outline"
+                  name={iconMap[item.icon] || "help-outline"}
                   size={22}
-                  className="text-red-500 mr-4"
+                  className="text-blue-600 mr-4"
                 />
-                <Text className="text-lg text-red-500">Logout</Text>
+                <Text className="text-lg text-gray-800">
+                  {item.featureName}
+                </Text>
               </TouchableOpacity>
-            </View>
-          </SafeAreaView>
-        </Animated.View>
-      )}
+            ))
+          ) : (
+            <Text className="text-gray-500 text-center py-8">
+              No menu items available
+            </Text>
+          )}
+        </View>
+
+        {/* Footer with logout button */}
+        <View className="p-2 border-t border-b border-gray-200 m-5">
+          <TouchableOpacity
+            className="flex-row items-center py-3"
+            onPress={() => logout()}
+            disabled={isAnimating}
+          >
+            <Ionicons
+              name="log-out-outline"
+              size={22}
+              className="text-red-500 mr-4"
+            />
+            <Text className="text-lg text-red-500">Logout</Text>
+          </TouchableOpacity>
+        </View>
+      </Animated.View>
     </>
   );
 };

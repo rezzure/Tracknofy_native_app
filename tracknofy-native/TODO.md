@@ -1,14 +1,12 @@
-# TODO: Fix Navigation Issues in MenuBar.jsx
+# TODO: Fix Menubar Not Opening After Login
 
 ## Tasks
-- [x] Fix navigation paths in MenuBar.jsx to use correct Expo Router paths (/profile, /notifications, etc.)
-- [x] Update ClientLayout (_layout.jsx) to properly handle profile navigation if needed
-- [x] Fix notification navigation issue (blank screen on second mount) by adding toggleMenu and using router.replace
-- [x] Test navigation to profile and notifications pages (fixed notification icon opening menu issue)
-- [x] Fix header positioning issue where top screen moves upward and becomes hidden (added SafeAreaProvider to root layout)
+- [ ] Add console logging in MenuBar toggleMenu function to debug if onPress is triggered
+- [ ] Improve error handling in fetchMenuItems with better logging and fallback menu items
+- [ ] Add try-catch around Animated operations in toggleMenu
+- [ ] Test the app and check console logs for any errors
+- [ ] Verify backend API response and accessibility from React Native app
+- [ ] If needed, update backend URL for proper network access (e.g., use 10.0.2.2 for Android emulator)
 
-## Details
-- Change `(Client)/profile` to `/profile`
-- Change `(Client)/notifications` to `/notifications`
-- Change `(Client)/${screen}` to `/${screen}` in navigateTo function
-- Ensure MenuBar component is correctly integrated in ClientLayout
+## Status
+- In Progress: Implementing debugging and error handling fixes

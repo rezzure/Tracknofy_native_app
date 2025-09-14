@@ -56,17 +56,3 @@ export default function Index() {
 
   );
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-

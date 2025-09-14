@@ -17,6 +17,10 @@ export default function RootLayout() {
            <Stack.Screen name="payments" />
            <Stack.Screen name="siteUpdate" />
            <Stack.Screen name="helpDesk" /> */}
+   
+          {/* <Stack.Screen name="notifications" /> */}
+
+          
         </Stack>
       </ToastProvider>
     </SafeAreaProvider>

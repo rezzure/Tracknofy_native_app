@@ -1,4 +1,3 @@
-
 // // import React, { useState, useEffect } from 'react';
 // // import { Tabs } from 'expo-router';
 // // import { View, Text, Animated, Easing, StyleSheet, TouchableOpacity } from 'react-native';
@@ -6,7 +5,6 @@
 // // // import { AuthProvider } from '../../contexts/AuthContext';
 // // import { useRouter, useSegments, useRootNavigationState } from 'expo-router';
 // // import CustomHeader from '../components/Common/MenuBar';
-
 
 // // export default function ClientLayout() {
 // //   // const { user } = useAuth();
@@ -60,7 +58,6 @@
 // //     ]).start();
 // //   };
 
-  
 // //   return (
 // //     // <AuthProvider>
 // //       <Tabs
@@ -75,10 +72,10 @@
 // //         options={{
 // //           title: 'Home',
 // //           tabBarIcon: ({ color, size, focused }) => (
-// //             <Ionicons 
-// //               name={focused ? 'home' : 'home-outline'} 
-// //               size={size} 
-// //               color={color} 
+// //             <Ionicons
+// //               name={focused ? 'home' : 'home-outline'}
+// //               size={size}
+// //               color={color}
 // //             />
 // //           ),
 // //         }}
@@ -93,10 +90,10 @@
 // //         options={{
 // //           title: 'Payment',
 // //           tabBarIcon: ({ color, size, focused }) => (
-// //             <Ionicons 
-// //               name={focused ? 'card' : 'card-outline'} 
-// //               size={size} 
-// //               color={color} 
+// //             <Ionicons
+// //               name={focused ? 'card' : 'card-outline'}
+// //               size={size}
+// //               color={color}
 // //             />
 // //           ),
 // //         }}
@@ -116,10 +113,10 @@
 // //         options={{
 // //           title: 'Progress',
 // //           tabBarIcon: ({ color, size, focused }) => (
-// //             <Ionicons 
-// //               name={focused ? 'document-text' : 'document-text-outline'} 
-// //               size={size} 
-// //               color={color} 
+// //             <Ionicons
+// //               name={focused ? 'document-text' : 'document-text-outline'}
+// //               size={size}
+// //               color={color}
 // //             />
 // //           ),
 // //         }}
@@ -139,10 +136,10 @@
 // //         options={{
 // //           title: 'Message',
 // //           tabBarIcon: ({ color, size, focused }) => (
-// //             <Ionicons 
-// //               name={focused ? 'chatbubble-ellipses' : 'chatbubble-ellipses-outline'} 
-// //               size={size} 
-// //               color={color} 
+// //             <Ionicons
+// //               name={focused ? 'chatbubble-ellipses' : 'chatbubble-ellipses-outline'}
+// //               size={size}
+// //               color={color}
 // //             />
 // //           ),
 // //         }}
@@ -156,7 +153,6 @@
 // //         }}
 // //       />
 
-
 // //        <Tabs.Screen
 // //         name="profile"
 // //         options={{
@@ -167,9 +163,6 @@
 // //     // </AuthProvider>
 // //   );
 // // }
-
-
-
 
 // import React, { useState, useEffect } from 'react';
 // import { Tabs } from 'expo-router';
@@ -242,7 +235,7 @@
 //     <View className="flex-1">
 //       {/* Menu Bar at the top */}
 //       <MenuBar setProfileModalVisible={setProfileModalVisible}/>
-      
+
 //       {/* Tab Navigator */}
 //       <Tabs
 //         screenOptions={{
@@ -256,10 +249,10 @@
 //           options={{
 //             title: 'Home',
 //             tabBarIcon: ({ color, size, focused }) => (
-//               <Ionicons 
-//                 name={focused ? 'home' : 'home-outline'} 
-//                 size={size} 
-//                 color={color} 
+//               <Ionicons
+//                 name={focused ? 'home' : 'home-outline'}
+//                 size={size}
+//                 color={color}
 //               />
 //             ),
 //           }}
@@ -274,10 +267,10 @@
 //           options={{
 //             title: 'Payment',
 //             tabBarIcon: ({ color, size, focused }) => (
-//               <Ionicons 
-//                 name={focused ? 'card' : 'card-outline'} 
-//                 size={size} 
-//                 color={color} 
+//               <Ionicons
+//                 name={focused ? 'card' : 'card-outline'}
+//                 size={size}
+//                 color={color}
 //               />
 //             ),
 //           }}
@@ -295,10 +288,10 @@
 //           options={{
 //             title: 'Progress',
 //             tabBarIcon: ({ color, size, focused }) => (
-//               <Ionicons 
-//                 name={focused ? 'document-text' : 'document-text-outline'} 
-//                 size={size} 
-//                 color={color} 
+//               <Ionicons
+//                 name={focused ? 'document-text' : 'document-text-outline'}
+//                 size={size}
+//                 color={color}
 //               />
 //             ),
 //           }}
@@ -316,10 +309,10 @@
 //           options={{
 //             title: 'Message',
 //             tabBarIcon: ({ color, size, focused }) => (
-//               <Ionicons 
-//                 name={focused ? 'chatbubble-ellipses' : 'chatbubble-ellipses-outline'} 
-//                 size={size} 
-//                 color={color} 
+//               <Ionicons
+//                 name={focused ? 'chatbubble-ellipses' : 'chatbubble-ellipses-outline'}
+//                 size={size}
+//                 color={color}
 //               />
 //             ),
 //           }}
@@ -338,9 +331,9 @@
 //           }}
 //         />
 //       </Tabs>
-      
+
 //       {/* Profile Modal */}
-//       <ProfileModal 
+//       <ProfileModal
 //         visible={profileModalVisible}
 //         onClose={() => setProfileModalVisible(false)}
 //         userData={userData}
@@ -361,7 +354,7 @@
 //   const segments = useSegments();
 //   const rootNavigationState = useRootNavigationState();
 //   const [activeTab, setActiveTab] = useState('dashboard');
-  
+
 //   // Create animation values for each actual screen name
 //   const [scaleAnims] = useState({
 //     dashboard: new Animated.Value(1),
@@ -427,7 +420,7 @@
 //     <View style={{ flex: 1 }}>
 //       {/* Menu Bar at the top */}
 //       <MenuBar />
-      
+
 //       {/* Tab Navigator */}
 //       <Tabs
 //         screenOptions={{
@@ -436,19 +429,19 @@
 //           tabBarButton: (props) => {
 //             // Extract tab name from the href safely
 //             const tabName = props.to?.split('/').pop() || '';
-            
+
 //             // Only apply animation to actual tab screens, not hidden ones
 //             if (scaleAnims[tabName]) {
 //               return (
-//                 <CustomTabButton 
-//                   tabName={tabName} 
+//                 <CustomTabButton
+//                   tabName={tabName}
 //                   onPress={props.onPress}
 //                 >
 //                   {props.children}
 //                 </CustomTabButton>
 //               );
 //             }
-            
+
 //             // For hidden screens or invalid tabs, use default behavior
 //             return (
 //               <TouchableOpacity onPress={props.onPress} style={styles.tabButton}>
@@ -464,10 +457,10 @@
 //           options={{
 //             title: 'Home',
 //             tabBarIcon: ({ color, size, focused }) => (
-//               <Ionicons 
-//                 name={focused ? 'home' : 'home-outline'} 
-//                 size={size} 
-//                 color={color} 
+//               <Ionicons
+//                 name={focused ? 'home' : 'home-outline'}
+//                 size={size}
+//                 color={color}
 //               />
 //             ),
 //           }}
@@ -479,10 +472,10 @@
 //           options={{
 //             title: 'Expense Entry',
 //             tabBarIcon: ({ color, size, focused }) => (
-//               <Ionicons 
-//                 name={focused ? 'card' : 'card-outline'} 
-//                 size={size} 
-//                 color={color} 
+//               <Ionicons
+//                 name={focused ? 'card' : 'card-outline'}
+//                 size={size}
+//                 color={color}
 //               />
 //             ),
 //           }}
@@ -494,10 +487,10 @@
 //           options={{
 //             title: 'Site Progress',
 //             tabBarIcon: ({ color, size, focused }) => (
-//               <Ionicons 
-//                 name={focused ? 'document-text' : 'document-text-outline'} 
-//                 size={size} 
-//                 color={color} 
+//               <Ionicons
+//                 name={focused ? 'document-text' : 'document-text-outline'}
+//                 size={size}
+//                 color={color}
 //               />
 //             ),
 //           }}
@@ -509,10 +502,10 @@
 //           options={{
 //             title: 'Material',
 //             tabBarIcon: ({ color, size, focused }) => (
-//               <Ionicons 
-//                 name={focused ? 'cube' : 'cube-outline'} 
-//                 size={size} 
-//                 color={color} 
+//               <Ionicons
+//                 name={focused ? 'cube' : 'cube-outline'}
+//                 size={size}
+//                 color={color}
 //               />
 //             ),
 //           }}
@@ -546,20 +539,25 @@
 //   },
 // });
 
-
-import React, { useState, useEffect } from 'react';
-import { Tabs } from 'expo-router';
-import { View, Animated, Easing, TouchableOpacity, StyleSheet } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
-import { useRouter, useSegments, useRootNavigationState } from 'expo-router';
-import MenuBar from '../components/Common/MenuBar';
+import React, { useState, useEffect } from "react";
+import { Tabs } from "expo-router";
+import {
+  View,
+  Animated,
+  Easing,
+  TouchableOpacity,
+  StyleSheet,
+} from "react-native";
+import { Ionicons } from "@expo/vector-icons";
+import { useRouter, useSegments, useRootNavigationState } from "expo-router";
+import MenuBar from "../components/Common/MenuBar";
 
 export default function _Layout() {
   const router = useRouter();
   const segments = useSegments();
   const rootNavigationState = useRootNavigationState();
-  const [activeTab, setActiveTab] = useState('dashboard');
-  
+  const [activeTab, setActiveTab] = useState("dashboard");
+
   // Create animation values for each actual screen name
   const [scaleAnims] = useState({
     dashboard: new Animated.Value(1),
@@ -581,7 +579,7 @@ export default function _Layout() {
   // Smooth press animation for tabs
   const animateTabPress = (tabName) => {
     // Reset all animations first
-    Object.keys(scaleAnims).forEach(key => {
+    Object.keys(scaleAnims).forEach((key) => {
       if (key !== tabName && scaleAnims[key]) {
         scaleAnims[key].setValue(1); // Reset immediately
       }
@@ -607,7 +605,9 @@ export default function _Layout() {
   // Custom tab button component with animation
   const CustomTabButton = ({ tabName, children, onPress }) => {
     return (
-      <Animated.View style={{ transform: [{ scale: scaleAnims[tabName] || 1 }] }}>
+      <Animated.View
+        style={{ transform: [{ scale: scaleAnims[tabName] || 1 }] }}
+      >
         <TouchableOpacity
           onPress={() => {
             animateTabPress(tabName);
@@ -625,31 +625,36 @@ export default function _Layout() {
     <View style={{ flex: 1 }}>
       {/* Menu Bar at the top */}
       <MenuBar />
-      
+
       {/* Tab Navigator */}
       <Tabs
         screenOptions={{
           headerShown: false,
           tabBarHideOnKeyboard: true,
+          tabBarActiveTintColor: "#0d2b55", // Color for active tab
+          tabBarInactiveTintColor: "black", // Color for inactive tabs
+          tabBarStyle: {
+            height: 70,
+          },
           tabBarButton: (props) => {
             // Extract tab name from the href safely
-            const tabName = props.to?.split('/').pop() || '';
-            
+            const tabName = props.to?.split("/").pop() || "";
+
             // Only apply animation to actual tab screens, not hidden ones
             if (scaleAnims[tabName]) {
               return (
-                <CustomTabButton 
-                  tabName={tabName} 
-                  onPress={props.onPress}
-                >
+                <CustomTabButton tabName={tabName} onPress={props.onPress}>
                   {props.children}
                 </CustomTabButton>
               );
             }
-            
+
             // For hidden screens or invalid tabs, use default behavior
             return (
-              <TouchableOpacity onPress={props.onPress} style={styles.tabButton}>
+              <TouchableOpacity
+                onPress={props.onPress}
+                style={styles.tabButton}
+              >
                 {props.children}
               </TouchableOpacity>
             );
@@ -660,12 +665,12 @@ export default function _Layout() {
         <Tabs.Screen
           name="dashboard"
           options={{
-            title: 'Home',
+            title: "Home",
             tabBarIcon: ({ color, size, focused }) => (
-              <Ionicons 
-                name={focused ? 'home' : 'home-outline'} 
-                size={size} 
-                color={color} 
+              <Ionicons
+                name={focused ? "home" : "home-outline"}
+                size={size}
+                color={color}
               />
             ),
           }}
@@ -675,12 +680,12 @@ export default function _Layout() {
         <Tabs.Screen
           name="expenseEntry"
           options={{
-            title: 'Expense Entry',
+            title: "Expense Entry",
             tabBarIcon: ({ color, size, focused }) => (
-              <Ionicons 
-                name={focused ? 'card' : 'card-outline'} 
-                size={size} 
-                color={color} 
+              <Ionicons
+                name={focused ? "card" : "card-outline"}
+                size={size}
+                color={color}
               />
             ),
           }}
@@ -690,12 +695,12 @@ export default function _Layout() {
         <Tabs.Screen
           name="siteProgressUpdate"
           options={{
-            title: 'Site Progress',
+            title: "Site Progress",
             tabBarIcon: ({ color, size, focused }) => (
-              <Ionicons 
-                name={focused ? 'document-text' : 'document-text-outline'} 
-                size={size} 
-                color={color} 
+              <Ionicons
+                name={focused ? "document-text" : "document-text-outline"}
+                size={size}
+                color={color}
               />
             ),
           }}
@@ -705,12 +710,12 @@ export default function _Layout() {
         <Tabs.Screen
           name="materialManagementSupervisor"
           options={{
-            title: 'Material',
+            title: "Material",
             tabBarIcon: ({ color, size, focused }) => (
-              <Ionicons 
-                name={focused ? 'cube' : 'cube-outline'} 
-                size={size} 
-                color={color} 
+              <Ionicons
+                name={focused ? "cube" : "cube-outline"}
+                size={size}
+                color={color}
               />
             ),
           }}
@@ -727,10 +732,7 @@ export default function _Layout() {
           options={{ href: null }}
         />
 
-        <Tabs.Screen
-          name="viewHistory"
-          options={{ href: null }}
-        />
+        <Tabs.Screen name="viewHistory" options={{ href: null }} />
       </Tabs>
     </View>
   );
@@ -739,7 +741,7 @@ export default function _Layout() {
 const styles = StyleSheet.create({
   tabButton: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
 });

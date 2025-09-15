@@ -87,6 +87,7 @@ const SiteUpdates = () => {
       });
 
       const result = await response.json();
+      console.log(result)
       console.log('API Response:', result.message);
       
       if (!result.success) {

@@ -634,7 +634,7 @@ export default function _Layout() {
           tabBarActiveTintColor: "#0d2b55", // Color for active tab
           tabBarInactiveTintColor: "black", // Color for inactive tabs
           tabBarStyle: {
-            height: 70,
+            height: 90,
           },
           tabBarButton: (props) => {
             // Extract tab name from the href safely
@@ -733,6 +733,8 @@ export default function _Layout() {
         />
 
         <Tabs.Screen name="viewHistory" options={{ href: null }} />
+
+        <Tabs.Screen name="notifications" options={{ href: null }} />
       </Tabs>
     </View>
   );

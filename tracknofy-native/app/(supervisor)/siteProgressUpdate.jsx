@@ -28,7 +28,6 @@
 //   const [isUploading, setIsUploading] = useState(false);
 //   const [loading, setLoading] = useState(false);
 
-
 //   // Format date for display
 //   const formatDate = (dateString) => {
 //     if (!dateString) return 'No date available';
@@ -41,7 +40,7 @@
 //     try {
 //       const email = await AsyncStorage.getItem("email");
 //       const token = await AsyncStorage.getItem("token");
-      
+
 //       const response = await fetch(`${backendURL}/api/allortedSite?email=${email}`, {
 //         method: "GET",
 //         headers: {
@@ -49,7 +48,7 @@
 //           "token": token
 //         }
 //       });
-      
+
 //       const result = await response.json();
 //       if (!result.success) {
 //         console.log(result.message);
@@ -57,7 +56,7 @@
 //       }
 //       setSiteData(result.data);
 //     } catch (error) {
-    
+
 //       console.error("Error fetching projects:", error);
 //     }
 //   };
@@ -67,7 +66,7 @@
 //     try {
 //       const _id = await AsyncStorage.getItem("_id");
 //       const token = await AsyncStorage.getItem("token");
-      
+
 //       const response = await fetch(`${backendURL}/api/getProgress/report/${_id}`, {
 //         method: "GET",
 //         headers: {
@@ -75,7 +74,7 @@
 //           "token": token
 //         },
 //       });
-      
+
 //       const result = await response.json();
 //       if(!result.success){
 //         console.log(result.message);
@@ -121,14 +120,14 @@
 //       }
 
 //       setIsUploading(true);
-      
+
 //       const newPhotos = result.assets.map(asset => ({
 //         id: Date.now() + Math.random(),
 //         uri: asset.uri,
 //         name: asset.fileName || `photo_${Date.now()}.jpg`,
 //         type: 'image/jpeg',
 //       }));
-      
+
 //       setPhotos(prev => [...prev, ...newPhotos]);
 //       setIsUploading(false);
 //     }
@@ -145,24 +144,24 @@
 //       Alert.alert("Please Select a Project");
 //       return;
 //     }
-    
+
 //     if (!textData.description) {
 //       Alert.alert('Please Enter a Description');
 //       return;
 //     }
-    
+
 //     if (photos.length === 0) {
 //       Alert.alert("Please Upload Atleast One Photo");
 //       return;
 //     }
 
 //     setLoading(true);
-    
+
 //     const formData = new FormData();
 //     formData.append('projectId', textData.projectId);
 //     formData.append('description', textData.description);
 //     formData.append('date', textData.date);
-    
+
 //     photos.forEach((photo) => {
 //       formData.append('photos', {
 //         uri: photo.uri,
@@ -174,7 +173,7 @@
 //     try {
 //       const id = await AsyncStorage.getItem("_id");
 //       const token = await AsyncStorage.getItem("token");
-      
+
 //       const response = await fetch(`${backendURL}/api/report/progress/${id}`, {
 //         method: "POST",
 //         headers: {
@@ -183,7 +182,7 @@
 //         },
 //         body: formData
 //       });
-      
+
 //       const result = await response.json();
 //       if (!result.success) {
 //         Alert.alert(result.message);
@@ -197,9 +196,9 @@
 //         ...result.data,
 //         siteName: selectedProject?.siteName || "Unknown Project",
 //       };
-      
+
 //       setProgressHistory(prev => [newProgressItem, ...prev]);
-      
+
 //       // Reset form
 //       setTextData({
 //         projectId: '',
@@ -391,26 +390,24 @@
 
 // export default SiteProgressUpdate;
 
-
-
-import React, { useState, useRef, useContext, useEffect } from 'react';
-import { 
-  View, 
-  Text, 
-  TextInput, 
-  TouchableOpacity, 
-  ScrollView, 
-  Image, 
+import React, { useState, useRef, useContext, useEffect } from "react";
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  ScrollView,
+  Image,
   Alert,
   ActivityIndicator,
-  SafeAreaView
-} from 'react-native';
-import * as ImagePicker from 'expo-image-picker';
-import { Picker } from '@react-native-picker/picker';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+  SafeAreaView,
+} from "react-native";
+import * as ImagePicker from "expo-image-picker";
+import { Picker } from "@react-native-picker/picker";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
-import { MaterialIcons, FontAwesome, Ionicons } from '@expo/vector-icons';
-import { useAuth } from '../../contexts/AuthContext';
+import { MaterialIcons, FontAwesome, Ionicons } from "@expo/vector-icons";
+import { useAuth } from "../../contexts/AuthContext";
 
 const SiteProgressUpdate = () => {
   const { backendURL } = useAuth();
@@ -418,18 +415,21 @@ const SiteProgressUpdate = () => {
   const [textData, setTextData] = useState({
     projectId: "",
     description: "",
-    date: new Date().toISOString().split('T')[0],
+    date: new Date().toISOString().split("T")[0],
   });
   const [photos, setPhotos] = useState([]);
+  console.log(photos);
   const [progressHistory, setProgressHistory] = useState([]);
   const [isUploading, setIsUploading] = useState(false);
   const [loading, setLoading] = useState(false);
 
   // Format date for display
   const formatDate = (dateString) => {
-    if (!dateString) return 'No date available';
+    if (!dateString) return "No date available";
     const date = new Date(dateString);
-    return isNaN(date.getTime()) ? 'Invalid date' : date.toLocaleDateString('en-US');
+    return isNaN(date.getTime())
+      ? "Invalid date"
+      : date.toLocaleDateString("en-US");
   };
 
   // Get projects assigned to the supervisor
@@ -438,15 +438,18 @@ const SiteProgressUpdate = () => {
       setLoading(true);
       const email = await AsyncStorage.getItem("email");
       const token = await AsyncStorage.getItem("token");
-      
-      const response = await fetch(`${backendURL}/api/allortedSite?email=${email}`, {
-        method: "GET",
-        headers: {
-          "content-type": "application/json",
-          "token": token
+
+      const response = await fetch(
+        `${backendURL}/api/allortedSite?email=${email}`,
+        {
+          method: "GET",
+          headers: {
+            "content-type": "application/json",
+            token: token,
+          },
         }
-      });
-      
+      );
+
       const result = await response.json();
       if (!result.success) {
         Alert.alert("Info", result.message || "No projects found");
@@ -467,15 +470,18 @@ const SiteProgressUpdate = () => {
       setLoading(true);
       const _id = await AsyncStorage.getItem("_id");
       const token = await AsyncStorage.getItem("token");
-      
-      const response = await fetch(`${backendURL}/api/getProgress/report/${_id}`, {
-        method: "GET",
-        headers: {
-          "Content-type": "application/json",
-          "token": token
-        },
-      });
-      
+
+      const response = await fetch(
+        `${backendURL}/api/getProgress/report/${_id}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-type": "application/json",
+            token: token,
+          },
+        }
+      );
+
       const result = await response.json();
       if (!result.success) {
         Alert.alert("Info", result.message || "No progress history found");
@@ -492,7 +498,7 @@ const SiteProgressUpdate = () => {
 
   // Handle form input changes
   const handleChange = (name, value) => {
-    setTextData(prev => ({
+    setTextData((prev) => ({
       ...prev,
       [name]: value,
     }));
@@ -502,9 +508,13 @@ const SiteProgressUpdate = () => {
   const handlePhotoUpload = async () => {
     try {
       // Request permissions
-      const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
-      if (status !== 'granted') {
-        Alert.alert("Permission required", "Please allow access to your photos");
+      const { status } =
+        await ImagePicker.requestMediaLibraryPermissionsAsync();
+      if (status !== "granted") {
+        Alert.alert(
+          "Permission required",
+          "Please allow access to your photos"
+        );
         return;
       }
 
@@ -522,14 +532,14 @@ const SiteProgressUpdate = () => {
           return;
         }
 
-        const newPhotos = result.assets.map(asset => ({
+        const newPhotos = result.assets.map((asset) => ({
           id: Date.now() + Math.random(),
           uri: asset.uri,
           name: asset.fileName || `photo_${Date.now()}.jpg`,
-          type: asset.type || 'image/jpeg',
+          type: asset.type || "image/jpeg",
         }));
 
-        setPhotos(prev => [...prev, ...newPhotos]);
+        setPhotos((prev) => [...prev, ...newPhotos]);
       }
     } catch (error) {
       Alert.alert("Error", "Failed to select photos");
@@ -539,7 +549,7 @@ const SiteProgressUpdate = () => {
 
   // Remove selected photo
   const removePhoto = (id) => {
-    setPhotos(prev => prev.filter(photo => photo.id !== id));
+    setPhotos((prev) => prev.filter((photo) => photo.id !== id));
   };
 
   // Submit progress update
@@ -548,12 +558,12 @@ const SiteProgressUpdate = () => {
       Alert.alert("Validation", "Please select a project");
       return;
     }
-    
+
     if (!textData.description.trim()) {
       Alert.alert("Validation", "Please enter a description");
       return;
     }
-    
+
     if (photos.length === 0) {
       Alert.alert("Validation", "Please upload at least one photo");
       return;
@@ -563,16 +573,21 @@ const SiteProgressUpdate = () => {
 
     try {
       const formData = new FormData();
-      formData.append('projectId', textData.projectId);
-      formData.append('description', textData.description);
-      formData.append('date', textData.date);
-      
-      // Append photos to form data
+      formData.append("projectId", textData.projectId);
+      formData.append("description", textData.description);
+      formData.append("date", textData.date);
+
+      // Append photos to form data - FIXED: Use proper file objects
       photos.forEach((photo, index) => {
-        formData.append('photos', {
+        // Extract filename from URI for better handling
+        const filename = photo.uri.split("/").pop();
+        const match = /\.(\w+)$/.exec(filename);
+        const type = match ? `image/${match[1]}` : "image/jpeg";
+
+        formData.append("photos", {
           uri: photo.uri,
-          type: photo.type,
-          name: photo.name,
+          type: type,
+          name: `site_photo_${index}_${Date.now()}.${match ? match[1] : "jpg"}`,
         });
       });
 
@@ -582,35 +597,45 @@ const SiteProgressUpdate = () => {
       const response = await fetch(`${backendURL}/api/report/progress/${id}`, {
         method: "POST",
         headers: {
-          "token": token,
-          "Content-Type": 'multipart/form-data',
+          token: token,
+          // Don't set Content-Type header - let React Native set it automatically
+          // for multipart/form-data with proper boundary
         },
-        body: formData
+        body: formData,
       });
-      
+
       const result = await response.json();
+      console.log("Response:", result);
+
       if (!result.success) {
         Alert.alert("Error", result.message);
         return;
       }
 
+      // Handle photos in response properly
+      if (result.data && result.data.photos) {
+        console.log("Uploaded photos:", result.data.photos);
+      }
+
       // Update progress history
-      const selectedProject = sitedata.find(project => project._id === textData.projectId);
+      const selectedProject = sitedata.find(
+        (project) => project._id === textData.projectId
+      );
       const newProgressItem = {
         ...result.data,
         siteName: selectedProject?.siteName || "Unknown Project",
       };
-      
-      setProgressHistory(prev => [newProgressItem, ...prev]);
-      
+
+      setProgressHistory((prev) => [newProgressItem, ...prev]);
+
       // Reset form
       setTextData({
-        projectId: '',
-        description: '',
-        date: new Date().toISOString().split('T')[0],
+        projectId: "",
+        description: "",
+        date: new Date().toISOString().split("T")[0],
       });
       setPhotos([]);
-      
+
       Alert.alert("Success", result.message || "Progress updated successfully");
     } catch (error) {
       Alert.alert("Error", "Failed to submit progress");
@@ -631,13 +656,19 @@ const SiteProgressUpdate = () => {
       <ScrollView className="flex-1 p-4">
         {/* Header */}
         <View className="mb-6">
-          <Text className="text-2xl font-bold text-gray-800">Site Progress Update</Text>
-          <Text className="text-gray-600 mt-1">Track and update your project progress</Text>
+          <Text className="text-2xl font-bold text-gray-800">
+            Site Progress Update
+          </Text>
+          <Text className="text-gray-600 mt-1">
+            Track and update your project progress
+          </Text>
         </View>
 
         {/* Progress Update Form */}
         <View className="bg-white rounded-xl shadow-sm p-5 mb-6 border border-gray-100">
-          <Text className="text-lg font-semibold text-gray-800 mb-4">New Progress Update</Text>
+          <Text className="text-lg font-semibold text-gray-800 mb-4">
+            New Progress Update
+          </Text>
 
           {/* Project Selection */}
           <View className="mb-4">
@@ -647,15 +678,15 @@ const SiteProgressUpdate = () => {
             <View className="border border-gray-300 rounded-lg bg-white">
               <Picker
                 selectedValue={textData.projectId}
-                onValueChange={(value) => handleChange('projectId', value)}
-                style={{ color: '#374151' }}
+                onValueChange={(value) => handleChange("projectId", value)}
+                style={{ color: "#374151" }}
               >
                 <Picker.Item label="Select Project" value="" />
-                {sitedata.map(project => (
-                  <Picker.Item 
-                    key={project._id} 
-                    label={project.siteName} 
-                    value={project._id} 
+                {sitedata.map((project) => (
+                  <Picker.Item
+                    key={project._id}
+                    label={project.siteName}
+                    value={project._id}
                   />
                 ))}
               </Picker>
@@ -667,7 +698,7 @@ const SiteProgressUpdate = () => {
             <Text className="text-sm font-medium text-gray-700 mb-2">Date</Text>
             <TextInput
               value={textData.date}
-              onChangeText={(value) => handleChange('date', value)}
+              onChangeText={(value) => handleChange("date", value)}
               className="w-full p-3 border border-gray-300 rounded-lg bg-white"
               placeholder="YYYY-MM-DD"
             />
@@ -679,9 +710,13 @@ const SiteProgressUpdate = () => {
               Upload Work Photos (Max 5)
             </Text>
 
-            <ScrollView horizontal showsHorizontalScrollIndicator={false} className="mb-3">
+            <ScrollView
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              className="mb-3"
+            >
               <View className="flex-row gap-3">
-                {photos.map(photo => (
+                {photos.map((photo) => (
                   <View key={photo.id} className="relative">
                     <Image
                       source={{ uri: photo.uri }}
@@ -707,8 +742,14 @@ const SiteProgressUpdate = () => {
                       <ActivityIndicator size="small" color="#3B82F6" />
                     ) : (
                       <>
-                        <FontAwesome name="cloud-upload" size={24} color="#3B82F6" />
-                        <Text className="text-xs text-blue-600 mt-1">Add Photo</Text>
+                        <FontAwesome
+                          name="cloud-upload"
+                          size={24}
+                          color="#3B82F6"
+                        />
+                        <Text className="text-xs text-blue-600 mt-1">
+                          Add Photo
+                        </Text>
                       </>
                     )}
                   </TouchableOpacity>
@@ -728,7 +769,7 @@ const SiteProgressUpdate = () => {
             </Text>
             <TextInput
               value={textData.description}
-              onChangeText={(value) => handleChange('description', value)}
+              onChangeText={(value) => handleChange("description", value)}
               multiline
               numberOfLines={4}
               className="w-full p-3 border border-gray-300 rounded-lg bg-white text-gray-800"
@@ -746,23 +787,32 @@ const SiteProgressUpdate = () => {
             {isUploading ? (
               <ActivityIndicator size="small" color="white" />
             ) : (
-              <Text className="text-white font-semibold">Submit Progress Update</Text>
+              <Text className="text-white font-semibold">
+                Submit Progress Update
+              </Text>
             )}
           </TouchableOpacity>
         </View>
 
         {/* Progress History */}
         <View className="bg-white rounded-xl shadow-sm p-5 border border-gray-100">
-          <Text className="text-lg font-semibold text-gray-800 mb-4">Progress History</Text>
+          <Text className="text-lg font-semibold text-gray-800 mb-4">
+            Progress History
+          </Text>
 
           {loading ? (
             <ActivityIndicator size="large" color="#3B82F6" className="py-8" />
           ) : progressHistory.length === 0 ? (
-            <Text className="text-gray-500 text-center py-6">No progress updates yet</Text>
+            <Text className="text-gray-500 text-center py-6">
+              No progress updates yet
+            </Text>
           ) : (
             <View className="space-y-4">
               {progressHistory.map((update, index) => (
-                <View key={update._id || index} className="border-b border-gray-200 pb-4 last:border-0">
+                <View
+                  key={update._id || index}
+                  className="border-b border-gray-200 pb-4 last:border-0"
+                >
                   <View className="flex-row justify-between items-start mb-2">
                     <Text className="font-semibold text-gray-900 flex-1">
                       {update.siteName || "Unknown Project"}
@@ -771,22 +821,36 @@ const SiteProgressUpdate = () => {
                       {formatDate(update.reportDate)}
                     </Text>
                   </View>
-                  <Text className="text-gray-700 mb-3">{update.description}</Text>
+                  <Text className="text-gray-700 mb-3">
+                    {update.description}
+                  </Text>
 
                   {update.photos && update.photos.length > 0 && (
-                    <ScrollView horizontal showsHorizontalScrollIndicator={false} className="mt-2">
+                    <ScrollView
+                      horizontal
+                      showsHorizontalScrollIndicator={false}
+                      className="mt-2"
+                    >
                       <View className="flex-row gap-2">
                         {update.photos.map((photo, idx) => (
                           <TouchableOpacity key={idx} className="relative">
                             <View className="h-16 w-16 bg-gray-100 rounded-lg flex items-center justify-center overflow-hidden">
                               {photo.path ? (
                                 <Image
-                                  source={{ uri: `${backendURL}/${photo.path.replace(/\\/g, '/')}` }}
+                                  // Remove the "public/" part from the path
+                                  //prev -- source={{ uri: `${backendURL}/${photo.path.replace(/\\/g, '/')}` }}
+                                  source={{
+                                    uri: `${backendURL}/${photo.path.replace(/^public[\\/]/, "").replace(/\\/g, "/")}`,
+                                  }}
                                   className="h-full w-full"
                                   resizeMode="cover"
                                 />
                               ) : (
-                                <Ionicons name="image" size={24} color="#9CA3AF" />
+                                <Ionicons
+                                  name="image"
+                                  size={24}
+                                  color="#9CA3AF"
+                                />
                               )}
                             </View>
                           </TouchableOpacity>

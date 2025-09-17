@@ -27,6 +27,7 @@ const iconMap = {
   FiUser: "person-outline",
   FiTool: "construct-outline",
   MdHelp: "help-circle-outline",
+  FaClipboardList :"clipboard-outline"
 };
 
 const MenuBar = () => {

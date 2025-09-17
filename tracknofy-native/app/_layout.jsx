@@ -11,14 +11,18 @@ export default function RootLayout() {
       <ToastProvider>
         <Stack screenOptions={{ headerShown: false }}>
           {/* making screen */}
-          <Stack.Screen name="index" />
-          {/* <Stack.Screen name="(supervisor)" /> */}
-           {/* <Stack.Screen name="dashboard" />
+           <Stack.Screen name="index" />
+           <Stack.Screen name="dashboard" />
            <Stack.Screen name="payments" />
            <Stack.Screen name="siteUpdate" />
-           <Stack.Screen name="helpDesk" /> */}
+           <Stack.Screen name="helpDesk" />
+
+           <Stack.Screen name="survey-form" /> 
+
+
+           
    
-          {/* <Stack.Screen name="notifications" /> */}
+          <Stack.Screen name="notifications" />
 
           
         </Stack>

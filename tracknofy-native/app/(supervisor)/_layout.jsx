@@ -708,12 +708,12 @@ export default function _Layout() {
 
         {/* Material Management Tab */}
         <Tabs.Screen
-          name="materialManagementSupervisor"
+          name="survey-form"
           options={{
-            title: "Material",
+            title: "Survey",
             tabBarIcon: ({ color, size, focused }) => (
               <Ionicons
-                name={focused ? "cube" : "cube-outline"}
+                name={focused ? "clipboard" : "clipboard-outline"}
                 size={size}
                 color={color}
               />
@@ -732,10 +732,15 @@ export default function _Layout() {
           options={{ href: null }}
         />
 
+         <Tabs.Screen
+          name="materialManagementSupervisor"
+          options={{ href: null }}
+        />
+
         <Tabs.Screen name="viewHistory" options={{ href: null }} />
 
         <Tabs.Screen name="notifications" options={{ href: null }} />
-        <Tabs.Screen name="survey-form" options={{ href: null }} />
+       
       </Tabs>
     </View>
   );

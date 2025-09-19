@@ -14,8 +14,8 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState({});
   console.log("user", user);
 
-  // const backendURL = "http://192.168.31.94:3000";
-  const backendURL = "http://192.168.1.7:3000";
+  const backendURL = "http://192.168.31.95:3000";
+  // const backendURL = "http://192.168.1.7:3000";
 
   const router = useRouter();
 

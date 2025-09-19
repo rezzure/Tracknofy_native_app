@@ -678,7 +678,7 @@ export default function _Layout() {
 
         {/* Expense Entry Tab */}
         <Tabs.Screen
-          name="expenseEntry"
+          name="expense-entry"
           options={{
             title: "Expense Entry",
             tabBarIcon: ({ color, size, focused }) => (
@@ -738,6 +738,7 @@ export default function _Layout() {
         />
 
         <Tabs.Screen name="viewHistory" options={{ href: null }} />
+        <Tabs.Screen name="workForceEntry" options={{ href: null }} />
 
         <Tabs.Screen name="notifications" options={{ href: null }} />
        
